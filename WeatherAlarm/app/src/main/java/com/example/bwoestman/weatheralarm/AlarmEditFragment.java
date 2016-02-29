@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.*;
 
 /**
  * Created by Brian Woestman on 2/26/16.
@@ -15,8 +16,22 @@ import android.view.ViewGroup;
  * We 5:30p - 9:20p
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class AlarmEditFragment extends Fragment
+public class AlarmEditFragment extends Fragment implements AppInfo
 {
+    private TimePicker mTimePicker;
+    private SeekBar mSbAdjustment;
+    private SeekBar mSbRain;
+    private Button mBtnCancel;
+    private Button mBtnSave;
+    private TextView mTvAdjustSbPostion;
+
+
+    private Integer mAdjSbPostion = 0;
+    private Integer mRainSbPostion = 0;
+
+
+    private Alarm alarm;
+
     /**
      * Called to have the fragment instantiate its user interface view.
      * This is optional, and non-graphical fragments can return null (which
@@ -40,6 +55,58 @@ public class AlarmEditFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_alarm_edit, container, false);
+
+        mTimePicker = (TimePicker) view.findViewById(R.id.timePicker);
+
+        mSbAdjustment = (SeekBar) view.findViewById(R.id.sbAdjustment);
+        mSbRain = (SeekBar) view.findViewById(R.id.sbRain);
+
+        mTvAdjustSbPostion = (TextView) view.findViewById(R.id.tvAdjustSbPostion);
+
+        mBtnCancel = (Button) view.findViewById(R.id.btnCancel);
+        mBtnSave = (Button) view.findViewById(R.id.btnSave);
+
+        mSbAdjustment.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+            {
+                mTvAdjustSbPostion.setText(" :" + Integer.toString(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar)
+            {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar)
+            {
+
+            }
+        });
+
+        mBtnSave.setOnClickListener(new AdapterView.OnClickListener()
+        {
+            /**
+             * Called when a view has been clicked.
+             *
+             * @param v The view that was clicked.
+             */
+            @Override
+            public void onClick(View v)
+            {
+                if (alarm == null)
+                {
+                    alarm = new Alarm();
+                    alarm.setHour(mTimePicker.getCurrentHour());
+                    alarm.setMinute(mTimePicker.getCurrentMinute());
+
+
+                }
+            }
+        });
 
         return view;
     }

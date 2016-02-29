@@ -7,4 +7,5 @@ package com.example.bwoestman.weatheralarm;
  */
 public interface AppInfo
 {
+    public static final String TAG = "*****";
 }

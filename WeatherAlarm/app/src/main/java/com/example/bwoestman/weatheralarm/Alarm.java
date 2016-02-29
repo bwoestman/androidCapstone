@@ -1,9 +1,5 @@
 package com.example.bwoestman.weatheralarm;
 
-import android.app.AlarmManager;
-
-import java.util.Calendar;
-
 /**
  * Created by Brian Woestman on 2/28/16.
  * Android Programming
@@ -11,28 +7,31 @@ import java.util.Calendar;
  */
 public class Alarm
 {
-    private Calendar calendar;
+    private Integer hour;
+    private Integer minute;
     private Integer rain;
     private Integer adjustment;
 
     public void Alarm(){}
 
-    public void Alarm(Calendar calendar, Integer rain, Integer adjustment)
+    public Integer getHour()
     {
-        this.calendar = calendar;
-        this.rain = rain;
-        this.adjustment = adjustment;
+        return hour;
     }
 
-
-    public Calendar getCalendar()
+    public void setHour(Integer hour)
     {
-        return calendar;
+        this.hour = hour;
     }
 
-    public void setCalendar(Calendar calendar)
+    public Integer getMinute()
     {
-        this.calendar = calendar;
+        return minute;
+    }
+
+    public void setMinute(Integer minute)
+    {
+        this.minute = minute;
     }
 
     public Integer getRain()
