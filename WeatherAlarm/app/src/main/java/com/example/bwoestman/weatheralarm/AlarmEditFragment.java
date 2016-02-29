@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,8 @@ public class AlarmEditFragment extends Fragment implements AppInfo
     private TextView mTvAdjustSbPostion;
     private TextView mTvRainSbPosition;
 
-    private Integer mAdjSbPostion = 0;
-    private Integer mRainSbPostion = 0;
+    private Integer adjPosition = 0;
+    private Integer rainPosition = 0;
 
 
     private Alarm alarm;
@@ -73,6 +74,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
+                adjPosition = progress;
                 mTvAdjustSbPostion.setText(": " + Integer.toString(progress) + " minutes");
             }
 
@@ -94,6 +96,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
+                rainPosition = progress;
                 mTvRainSbPosition.setText(": " + Integer.toString(progress) + "%");
             }
 
@@ -122,6 +125,14 @@ public class AlarmEditFragment extends Fragment implements AppInfo
                 alarm = new Alarm();
                 alarm.setHour(mTimePicker.getCurrentHour());
                 alarm.setMinute(mTimePicker.getCurrentMinute());
+                alarm.setAdjustment(adjPosition);
+                alarm.setRain(rainPosition);
+
+                // TODO: 2/28/16 remove this log
+                Log.d(TAG, "onClick: " + alarm.getAdjustment());
+                Log.d(TAG, "onClick: " + alarm.getHour());
+                Log.d(TAG, "onClick: " + alarm.getMinute());
+                Log.d(TAG, "onClick: " + alarm.getRain());
             }
         });
 
