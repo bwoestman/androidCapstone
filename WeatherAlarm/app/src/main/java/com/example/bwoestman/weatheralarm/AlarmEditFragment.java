@@ -24,7 +24,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo
     private Button mBtnCancel;
     private Button mBtnSave;
     private TextView mTvAdjustSbPostion;
-
+    private TextView mTvRainSbPosition;
 
     private Integer mAdjSbPostion = 0;
     private Integer mRainSbPostion = 0;
@@ -62,16 +62,18 @@ public class AlarmEditFragment extends Fragment implements AppInfo
         mSbRain = (SeekBar) view.findViewById(R.id.sbRain);
 
         mTvAdjustSbPostion = (TextView) view.findViewById(R.id.tvAdjustSbPostion);
+        mTvRainSbPosition = (TextView) view.findViewById(R.id.tvRainSbPosition);
 
         mBtnCancel = (Button) view.findViewById(R.id.btnCancel);
         mBtnSave = (Button) view.findViewById(R.id.btnSave);
 
+        //seekbar anonymous class for Adjustment setting
         mSbAdjustment.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
-                mTvAdjustSbPostion.setText(" :" + Integer.toString(progress));
+                mTvAdjustSbPostion.setText(": " + Integer.toString(progress) + " minutes");
             }
 
             @Override
@@ -83,7 +85,27 @@ public class AlarmEditFragment extends Fragment implements AppInfo
             @Override
             public void onStopTrackingTouch(SeekBar seekBar)
             {
+            }
+        });
 
+        //seekbar anonymous class for Rain setting
+        mSbRain.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+            {
+                mTvRainSbPosition.setText(": " + Integer.toString(progress) + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar)
+            {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar)
+            {
             }
         });
 
@@ -97,14 +119,9 @@ public class AlarmEditFragment extends Fragment implements AppInfo
             @Override
             public void onClick(View v)
             {
-                if (alarm == null)
-                {
-                    alarm = new Alarm();
-                    alarm.setHour(mTimePicker.getCurrentHour());
-                    alarm.setMinute(mTimePicker.getCurrentMinute());
-
-
-                }
+                alarm = new Alarm();
+                alarm.setHour(mTimePicker.getCurrentHour());
+                alarm.setMinute(mTimePicker.getCurrentMinute());
             }
         });
 
