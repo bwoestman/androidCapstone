@@ -53,4 +53,11 @@ public class Alarm
     {
         this.adjustment = adjustment;
     }
+
+    public String toString()
+    {
+        String string = "hour " + hour + ", minute " + minute + ", adjustment " +
+                adjustment + ", rain " + rain;
+        return string;
+    }
 }

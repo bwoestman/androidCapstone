@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by Brian Woestman on 2/26/16.
  * Android Programming
@@ -56,6 +58,11 @@ public class AlarmEditFragment extends Fragment implements AppInfo
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_alarm_edit, container, false);
+
+        if (SingletonAlarm.getInstance().getClickedAlarm() == null)
+        {
+            SingletonAlarm.getInstance().setAlarms(new ArrayList<Alarm>());
+        }
 
         mTimePicker = (TimePicker) view.findViewById(R.id.timePicker);
 
@@ -127,12 +134,10 @@ public class AlarmEditFragment extends Fragment implements AppInfo
                 alarm.setMinute(mTimePicker.getCurrentMinute());
                 alarm.setAdjustment(adjPosition);
                 alarm.setRain(rainPosition);
+                SingletonAlarm.getInstance().addAlarm(alarm);
 
-                // TODO: 2/28/16 remove this log
-                Log.d(TAG, "onClick: " + alarm.getAdjustment());
-                Log.d(TAG, "onClick: " + alarm.getHour());
-                Log.d(TAG, "onClick: " + alarm.getMinute());
-                Log.d(TAG, "onClick: " + alarm.getRain());
+                // TODO: 3/1/16 testing
+                Log.d(TAG, "onClick: " + SingletonAlarm.getInstance().getAlarms().get(0).toString());
             }
         });
 
