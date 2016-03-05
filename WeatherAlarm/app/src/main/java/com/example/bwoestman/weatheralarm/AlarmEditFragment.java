@@ -1,8 +1,10 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -129,12 +131,16 @@ public class AlarmEditFragment extends Fragment implements AppInfo
             @Override
             public void onClick(View v)
             {
+
                 alarm = new Alarm();
                 alarm.setHour(mTimePicker.getCurrentHour());
                 alarm.setMinute(mTimePicker.getCurrentMinute());
                 alarm.setAdjustment(adjPosition);
                 alarm.setRain(rainPosition);
+
                 SingletonAlarm.getInstance().addAlarm(alarm);
+
+                alarm.createAlarm(getActivity());
 
                 // TODO: 3/1/16 testing
                 Log.d(TAG, "onClick: " + SingletonAlarm.getInstance().getAlarms().get(0).toString());

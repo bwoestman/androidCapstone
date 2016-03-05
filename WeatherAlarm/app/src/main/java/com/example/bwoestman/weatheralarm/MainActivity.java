@@ -28,14 +28,13 @@ public class MainActivity extends AppCompatActivity implements AppInfo
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // TODO: 3/5/16 Alarm testing this needs to be moved but is working
-
-        Intent alarm = new Intent(AlarmClock.ACTION_SET_ALARM);
-        alarm.putExtra(AlarmClock.EXTRA_HOUR, 12);
-        alarm.putExtra(AlarmClock.EXTRA_MINUTES, 00);
-        alarm.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-        startActivity(alarm);
+//
+//        // TODO: 3/5/16 Alarm testing this needs to be moved but is working
+//        Intent alarm = new Intent(AlarmClock.ACTION_SET_ALARM);
+//        alarm.putExtra(AlarmClock.EXTRA_HOUR, 12);
+//        alarm.putExtra(AlarmClock.EXTRA_MINUTES, 00);
+//        alarm.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+//        startActivity(alarm);
 
         // TODO: 3/5/16 Weather testing needs to be moved but is working
         ForecastApi.create(API_KEY);

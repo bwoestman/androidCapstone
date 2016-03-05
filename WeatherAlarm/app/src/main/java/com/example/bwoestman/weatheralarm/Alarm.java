@@ -1,5 +1,9 @@
 package com.example.bwoestman.weatheralarm;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.provider.AlarmClock;
+
 /**
  * Created by Brian Woestman on 2/28/16.
  * Android Programming
@@ -52,6 +56,15 @@ public class Alarm
     public void setAdjustment(Integer adjustment)
     {
         this.adjustment = adjustment;
+    }
+
+    public void createAlarm(Activity activity)
+    {
+        Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
+        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
+        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minute);
+        alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+        activity.startActivity(alarmIntent);
     }
 
     public String toString()
