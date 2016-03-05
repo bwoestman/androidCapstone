@@ -8,4 +8,5 @@ package com.example.bwoestman.weatheralarm;
 public interface AppInfo
 {
     public static final String TAG = "*****";
+    public static final String API_KEY = "384e291c8f22981980d220fd0400870a";
 }
