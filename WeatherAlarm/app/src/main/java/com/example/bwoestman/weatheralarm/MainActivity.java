@@ -1,7 +1,11 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
+import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +17,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity implements AppInfo
 {
@@ -21,9 +26,19 @@ public class MainActivity extends AppCompatActivity implements AppInfo
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        ForecastApi.create(API_KEY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // TODO: 3/5/16 Alarm testing this needs to be moved but is working
+
+        Intent alarm = new Intent(AlarmClock.ACTION_SET_ALARM);
+        alarm.putExtra(AlarmClock.EXTRA_HOUR, 12);
+        alarm.putExtra(AlarmClock.EXTRA_MINUTES, 00);
+        alarm.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+        startActivity(alarm);
+
+        // TODO: 3/5/16 Weather testing needs to be moved but is working
+        ForecastApi.create(API_KEY);
 
         RequestBuilder weather = new RequestBuilder();
 
@@ -38,13 +53,14 @@ public class MainActivity extends AppCompatActivity implements AppInfo
             @Override
             public void success(WeatherResponse weatherResponse, Response response)
             {
-                Log.d(TAG, "success: " + weatherResponse.getCurrently().getPrecipProbability());
+                Log.d(TAG, "success: Precip = " + weatherResponse.getCurrently()
+                        .getPrecipProbability());
             }
 
             @Override
             public void failure(RetrofitError error)
             {
-                Log.d(TAG, "failure: Oh, shit!" + error);
+                Log.d(TAG, "failure: Oh, no!" + error);
             }
         });
 
