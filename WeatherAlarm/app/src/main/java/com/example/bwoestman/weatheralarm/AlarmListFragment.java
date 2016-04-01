@@ -15,4 +15,12 @@ import android.view.ViewGroup;
  */
 public class AlarmListFragment extends Fragment implements AppInfo
 {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_alarm_list, container, false);
+        return view;
+    }
 }

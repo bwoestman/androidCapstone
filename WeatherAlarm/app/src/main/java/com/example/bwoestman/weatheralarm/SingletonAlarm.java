@@ -22,7 +22,6 @@ public class SingletonAlarm
     {
     }
 
-
     public ArrayList<Alarm> getAlarms()
     {
         return alarms;

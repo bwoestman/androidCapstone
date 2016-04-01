@@ -11,56 +11,146 @@ import android.provider.AlarmClock;
  */
 public class Alarm
 {
+    private Long _id;
     private Integer hour;
     private Integer minute;
     private Integer rain;
     private Integer adjustment;
+    private Intent alarmIntent;
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public Long get_id()
+    {
+        return _id;
+    }
+
+    /**
+     * Sets id.
+     *
+     * @param _id the id
+     */
+    public void set_id(Long _id)
+    {
+        this._id = _id;
+    }
+
+    /**
+     * Alarm.
+     */
     public void Alarm(){}
 
+    /**
+     * Gets hour.
+     *
+     * @return the hour
+     */
     public Integer getHour()
     {
         return hour;
     }
 
+    /**
+     * Sets hour.
+     *
+     * @param hour the hour
+     */
     public void setHour(Integer hour)
     {
         this.hour = hour;
     }
 
+    /**
+     * Gets minute.
+     *
+     * @return the minute
+     */
     public Integer getMinute()
     {
         return minute;
     }
 
+    /**
+     * Sets minute.
+     *
+     * @param minute the minute
+     */
     public void setMinute(Integer minute)
     {
         this.minute = minute;
     }
 
+    /**
+     * Gets rain.
+     *
+     * @return the rain
+     */
     public Integer getRain()
     {
         return rain;
     }
 
+    /**
+     * Sets rain.
+     *
+     * @param rain the rain
+     */
     public void setRain(Integer rain)
     {
         this.rain = rain;
     }
 
+    /**
+     * Gets adjustment.
+     *
+     * @return the adjustment
+     */
     public Integer getAdjustment()
     {
         return adjustment;
     }
 
+    /**
+     * Sets adjustment.
+     *
+     * @param adjustment the adjustment
+     */
     public void setAdjustment(Integer adjustment)
     {
         this.adjustment = adjustment;
     }
 
+    /**
+     * Gets alarm intent.
+     *
+     * @return the alarm intent
+     */
+    public Intent getAlarmIntent()
+    {
+        return alarmIntent;
+    }
+
+    /**
+     * Sets alarm intent.
+     *
+     * @param alarmIntent the alarm intent
+     */
+    public void setAlarmIntent(Intent alarmIntent)
+    {
+        this.alarmIntent = alarmIntent;
+    }
+
+    /**
+     * Create alarm.
+     *
+     * @param activity the activity
+     */
     public void createAlarm(Activity activity)
     {
-        Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
+        alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minute);
         alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
@@ -69,8 +159,8 @@ public class Alarm
 
     public String toString()
     {
-        String string = "hour " + hour + ", minute " + minute + ", adjustment " +
-                adjustment + ", rain " + rain;
+        String string = "hour: " + hour + ", minute: " + minute + ", adjustment: " +
+                adjustment + ", rain: " + rain;
         return string;
     }
 }

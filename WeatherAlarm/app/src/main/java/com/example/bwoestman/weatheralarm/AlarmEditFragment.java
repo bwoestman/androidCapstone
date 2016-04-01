@@ -1,6 +1,7 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.annotation.TargetApi;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,7 +58,8 @@ public class AlarmEditFragment extends Fragment implements AppInfo
      */
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_alarm_edit, container, false);
 
@@ -142,8 +144,18 @@ public class AlarmEditFragment extends Fragment implements AppInfo
 
                 alarm.createAlarm(getActivity());
 
+                AlarmListFragment alf = new AlarmListFragment();
+
+                android.support.v4.app.FragmentTransaction transaction = getActivity()
+                        .getSupportFragmentManager().beginTransaction();
+
+                transaction.replace(R.id.fragment_container, alf)
+                        .addToBackStack(null)
+                        .commit();
+
                 // TODO: 3/1/16 testing
-                Log.d(TAG, "onClick: " + SingletonAlarm.getInstance().getAlarms().get(0).toString());
+                Log.d(TAG, "onClick: " + SingletonAlarm.getInstance()
+                        .getAlarms().get(0).toString());
             }
         });
 
