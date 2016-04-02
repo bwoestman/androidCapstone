@@ -140,25 +140,30 @@ public class AlarmEditFragment extends Fragment implements AppInfo
                 alarm.setAdjustment(adjPosition);
                 alarm.setRain(rainPosition);
 
-                SingletonAlarm.getInstance().addAlarm(alarm);
+                DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+                dbHandler.addAlarm(alarm);
+                
+                //// TODO: 4/1/16 remove this after testing
+                //getContext().deleteDatabase("alarmDb.db");
 
-                alarm.createAlarm(getActivity());
-
-                AlarmListFragment alf = new AlarmListFragment();
-
-                android.support.v4.app.FragmentTransaction transaction = getActivity()
-                        .getSupportFragmentManager().beginTransaction();
-
-                transaction.replace(R.id.fragment_container, alf)
-                        .addToBackStack(null)
-                        .commit();
-
-                // TODO: 3/1/16 testing
-                Log.d(TAG, "onClick: " + SingletonAlarm.getInstance()
-                        .getAlarms().get(0).toString());
+                goToListView();
             }
         });
 
         return view;
+    }
+
+    public void goToListView()
+    {
+        alarm.createAlarm(getActivity());
+
+        AlarmListFragment alf = new AlarmListFragment();
+
+        android.support.v4.app.FragmentTransaction transaction = getActivity()
+                .getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, alf)
+                .addToBackStack(null)
+                .commit();
     }
 }

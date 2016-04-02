@@ -2,8 +2,12 @@ package com.example.bwoestman.weatheralarm;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Brian Woestman on 3/6/16.
@@ -21,7 +25,6 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
     public static final String COLUMN_MINUTE = "minute";
     public static final String COLUMN_RAIN = "rain";
     public static final String COLUMN_ADJUSTMENT = "adjustment";
-    public static final String COLUMN_ALARM_INTENT = "alarmIntent";
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory,
                      int version)
@@ -41,8 +44,8 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
     {
         String CREATE_ALARMS_TABLE = "CREATE TABLE " + TABLE_ALARMS
                 + " (" + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_HOUR
-                + " TEXT," + COLUMN_MINUTE + " TEXT," + COLUMN_RAIN + " TEXT,"
-                + COLUMN_ADJUSTMENT + " TEXT," + COLUMN_ALARM_INTENT + ")";
+                + " INTEGER," + COLUMN_MINUTE + " INTEGER," + COLUMN_RAIN + " INTEGER,"
+                + COLUMN_ADJUSTMENT + " INTEGER)";
 
         db.execSQL(CREATE_ALARMS_TABLE);
     }
@@ -77,13 +80,10 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
     {
         ContentValues values = new ContentValues();
 
-        String intent = alarm.getAlarmIntent().toUri(0);
-
         values.put(COLUMN_HOUR, alarm.getHour());
         values.put(COLUMN_MINUTE, alarm.getMinute());
         values.put(COLUMN_RAIN, alarm.getRain());
         values.put(COLUMN_ADJUSTMENT, alarm.getAdjustment());
-        values.put(COLUMN_ALARM_INTENT, intent);
 
         SQLiteDatabase db = this.getWritableDatabase();
         Long id = db.insert(TABLE_ALARMS, null, values);
@@ -91,5 +91,41 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         alarm.set_id(id);
 
         return id;
+    }
+
+    public List<Alarm> getAlarms()
+    {
+        ArrayList<Alarm> alarms = new ArrayList<>();
+        String query = "SELECT _id, hour, minute, rain, adjustment FROM " + TABLE_ALARMS;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast())
+        {
+            Long _id = cursor.getLong(0);
+            Integer hour = cursor.getInt(1);
+            Integer minute = cursor.getInt(2);
+            Integer rain = cursor.getInt(3);
+            Integer adjustment = cursor.getInt(4);
+
+            alarms.add(new Alarm(_id, hour, minute, rain, adjustment));
+            cursor.moveToNext();
+        }
+
+        db.close();
+
+        return alarms;
+    }
+
+    public void dropTable()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "DROP TABLE IF EXISTS " + TABLE_ALARMS;
+
+        db.execSQL(sql);
     }
 }

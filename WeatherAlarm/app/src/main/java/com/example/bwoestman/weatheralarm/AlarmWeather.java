@@ -19,7 +19,7 @@ public class AlarmWeather implements AppInfo
     /**
      * The Current precip.
      */
-    Integer currentPrecip = 1000;
+    Double currentPrecip;
 
     /**
      * Gets current weather forcast.
@@ -33,7 +33,7 @@ public class AlarmWeather implements AppInfo
         final Request request = new Request();
 
         request.setLat("43.06");
-        request.setLng("89.40");
+        request.setLng("-89.40");
         request.setUnits(Request.Units.US);
         request.setLanguage(Request.Language.ENGLISH);
 
@@ -42,7 +42,7 @@ public class AlarmWeather implements AppInfo
             @Override
             public void success(WeatherResponse weatherResponse, Response response)
             {
-                currentPrecip = Integer.valueOf(weatherResponse.getCurrently()
+                currentPrecip = Double.valueOf(weatherResponse.getCurrently()
                         .getPrecipProbability());
 
                 Log.d(TAG, "success: precip " + currentPrecip);
@@ -61,7 +61,7 @@ public class AlarmWeather implements AppInfo
      *
      * @return the current precip
      */
-    public Integer getCurrentPrecip()
+    public Double getCurrentPrecip()
     {
         return currentPrecip;
     }
@@ -71,7 +71,7 @@ public class AlarmWeather implements AppInfo
      *
      * @param currentPrecip the current precip
      */
-    public void setCurrentPrecip(Integer currentPrecip)
+    public void setCurrentPrecip(Double currentPrecip)
     {
         this.currentPrecip = currentPrecip;
     }

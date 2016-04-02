@@ -18,6 +18,19 @@ public class Alarm
     private Integer adjustment;
     private Intent alarmIntent;
 
+    public Alarm(){}
+
+    public Alarm (Long _id, Integer hour, Integer minute, Integer rain, Integer
+            adjustment)
+    {
+        this.Alarm();
+        this._id = _id;
+        this.hour = hour;
+        this.minute = minute;
+        this.rain = rain;
+        this.adjustment = adjustment;
+    }
+
     /**
      * Gets id.
      *
@@ -159,8 +172,7 @@ public class Alarm
 
     public String toString()
     {
-        String string = "hour: " + hour + ", minute: " + minute + ", adjustment: " +
+        return "hour: " + hour + ", minute: " + minute + ", adjustment: " +
                 adjustment + ", rain: " + rain;
-        return string;
     }
 }
