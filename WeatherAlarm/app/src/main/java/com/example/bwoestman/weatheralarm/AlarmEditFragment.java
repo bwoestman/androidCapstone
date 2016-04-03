@@ -155,8 +155,6 @@ public class AlarmEditFragment extends Fragment implements AppInfo
 
     public void goToListView()
     {
-        alarm.createAlarm(getActivity());
-
         AlarmListFragment alf = new AlarmListFragment();
 
         android.support.v4.app.FragmentTransaction transaction = getActivity()

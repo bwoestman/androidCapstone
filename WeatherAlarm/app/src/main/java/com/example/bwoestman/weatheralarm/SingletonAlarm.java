@@ -12,6 +12,7 @@ public class SingletonAlarm
     private static SingletonAlarm ourInstance = new SingletonAlarm();
     private ArrayList<Alarm> alarms;
     private Integer clickedAlarm = null;
+    private int position;
 
     public static SingletonAlarm getInstance()
     {
@@ -55,5 +56,15 @@ public class SingletonAlarm
     public void deleteAlarm(Integer position)
     {
         alarms.remove(position);
+    }
+
+    public int getPosition()
+    {
+        return position;
+    }
+
+    public void setPosition(int position)
+    {
+        this.position = position;
     }
 }

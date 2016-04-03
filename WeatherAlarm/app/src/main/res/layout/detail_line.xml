@@ -24,12 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10:20 AM"
-                android:id="@+id/textView" android:textSize="36dp"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mo, Tu, We, Th, Fr, Sa, Su"
-                android:id="@+id/textView2"/>
+                android:id="@+id/tv_time" android:textSize="36dp"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"
@@ -39,7 +34,8 @@
     <LinearLayout android:orientation="vertical"
                   android:layout_width="wrap_content"
                   android:layout_height="fill_parent"
-                  android:layout_weight="1" android:gravity="center_vertical|center_horizontal">
+                  android:layout_weight="1"
+                  android:gravity="center_vertical|center_horizontal">
         <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
