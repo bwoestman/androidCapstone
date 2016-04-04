@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public class DBHandler extends SQLiteOpenHelper implements AppInfo
 {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "alarmDb.db";
+    private static final String DATABASE_NAME = "test.db";
     private static final String TABLE_ALARMS = "alarms";
 
     public static final String COLUMN_ID = "_id";
@@ -25,6 +26,7 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
     public static final String COLUMN_MINUTE = "minute";
     public static final String COLUMN_RAIN = "rain";
     public static final String COLUMN_ADJUSTMENT = "adjustment";
+    public static final String COLUMN_ENABLED = "enabled";
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory,
                      int version)
@@ -45,7 +47,7 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         String CREATE_ALARMS_TABLE = "CREATE TABLE " + TABLE_ALARMS
                 + " (" + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_HOUR
                 + " INTEGER," + COLUMN_MINUTE + " INTEGER," + COLUMN_RAIN + " INTEGER,"
-                + COLUMN_ADJUSTMENT + " INTEGER)";
+                + COLUMN_ADJUSTMENT + " INTEGER," + COLUMN_ENABLED + " INTEGER)";
 
         db.execSQL(CREATE_ALARMS_TABLE);
     }
@@ -84,6 +86,7 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         values.put(COLUMN_MINUTE, alarm.getMinute());
         values.put(COLUMN_RAIN, alarm.getRain());
         values.put(COLUMN_ADJUSTMENT, alarm.getAdjustment());
+        values.put(COLUMN_ENABLED, alarm.getEnabled());
 
         SQLiteDatabase db = this.getWritableDatabase();
         Long id = db.insert(TABLE_ALARMS, null, values);
@@ -96,7 +99,8 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
     public List<Alarm> getAlarms()
     {
         ArrayList<Alarm> alarms = new ArrayList<>();
-        String query = "SELECT _id, hour, minute, rain, adjustment FROM " + TABLE_ALARMS;
+        String query = "SELECT _id, hour, minute, rain, adjustment, enabled FROM " +
+                TABLE_ALARMS;
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -111,8 +115,9 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
             Integer minute = cursor.getInt(2);
             Integer rain = cursor.getInt(3);
             Integer adjustment = cursor.getInt(4);
+            Integer enabled = cursor.getInt(5);
 
-            alarms.add(new Alarm(_id, hour, minute, rain, adjustment));
+            alarms.add(new Alarm(_id, hour, minute, rain, adjustment, enabled));
             cursor.moveToNext();
         }
 

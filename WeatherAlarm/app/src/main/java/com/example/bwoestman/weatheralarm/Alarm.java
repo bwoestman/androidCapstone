@@ -16,19 +16,21 @@ public class Alarm
     private Integer minute;
     private Integer rain;
     private Integer adjustment;
+    private Integer enabled = 1;
     private Intent alarmIntent;
 
     public Alarm(){}
 
     public Alarm (Long _id, Integer hour, Integer minute, Integer rain, Integer
-            adjustment)
+            adjustment, Integer enabled)
     {
-        this.Alarm();
+        this();
         this._id = _id;
         this.hour = hour;
         this.minute = minute;
         this.rain = rain;
         this.adjustment = adjustment;
+        this.enabled = enabled;
     }
 
     /**
@@ -50,11 +52,6 @@ public class Alarm
     {
         this._id = _id;
     }
-
-    /**
-     * Alarm.
-     */
-    public void Alarm(){}
 
     /**
      * Gets hour.
@@ -136,6 +133,16 @@ public class Alarm
         this.adjustment = adjustment;
     }
 
+    public Integer getEnabled()
+    {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled)
+    {
+        this.enabled = enabled;
+    }
+
     /**
      * Gets alarm intent.
      *
@@ -173,6 +180,6 @@ public class Alarm
     public String toString()
     {
         return "hour: " + hour + ", minute: " + minute + ", adjustment: " +
-                adjustment + ", rain: " + rain;
+                adjustment + ", rain: " + rain + ", " + enabled;
     }
 }

@@ -3,7 +3,8 @@
               android:orientation="horizontal"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:gravity="center_horizontal">
+              android:gravity="center_horizontal"
+                android:id="@+id/alarm_list_fragment" android:baselineAligned="false">
 
     <LinearLayout
             android:orientation="vertical"
@@ -22,40 +23,20 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10:20 AM"
-                android:id="@+id/textView" android:textSize="36dp"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mo, Tu, We, Th, Fr, Sa, Su"
-                android:id="@+id/textView2"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center_horizontal" android:layout_weight="1">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:text="25%"
-                android:id="@+id/textView3" android:textSize="36dp"
-                android:layout_weight="1"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rain"
-                android:id="@+id/textView4" android:textSize="16dp"/>
+                android:text="@string/test_time"
+                android:id="@+id/tv_time"
+                android:textSize="36sp"/>
     </LinearLayout>
     <LinearLayout android:orientation="vertical"
                   android:layout_width="wrap_content"
                   android:layout_height="fill_parent"
-                  android:layout_weight="1" android:gravity="center_vertical|center_horizontal">
+                  android:layout_weight="1"
+                  android:gravity="center_vertical|center_horizontal">
         <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enable"
-                android:id="@+id/switch1" android:checked="false"
+                android:text="@string/enable"
+                android:id="@+id/sw_enable" android:checked="false"
                 />
     </LinearLayout>
 </LinearLayout>

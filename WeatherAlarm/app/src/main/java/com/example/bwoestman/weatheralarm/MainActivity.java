@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
@@ -36,12 +37,15 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         {
             if (savedInstanceState == null)
             {
-                AlarmEditFragment alarmEditFragment = new AlarmEditFragment();
-                alarmEditFragment.setArguments(getIntent().getExtras());
+                AlarmListFragment alarmListFragment = new AlarmListFragment();
+                alarmListFragment.setArguments(getIntent().getExtras());
+
+//                AlarmEditFragment alarmEditFragment = new AlarmEditFragment();
+//                alarmEditFragment.setArguments(getIntent().getExtras());
 
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.fragment_container, alarmEditFragment)
+                        .add(R.id.fragment_container, alarmListFragment)
                         .commit();
             }
         }

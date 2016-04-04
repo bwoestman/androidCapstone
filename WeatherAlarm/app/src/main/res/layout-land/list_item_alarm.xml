@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" android:layout_weight="0">
+        <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/checkBox" android:checked="false"
+                />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1" android:gravity="center_horizontal">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/test_time"
+                android:id="@+id/tv_time"
+                android:textSize="36sp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/test_days"
+                android:id="@+id/textView2"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:layout_weight="1">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="@string/test_rain"
+                android:id="@+id/tv_rain_threshold"
+                android:textSize="36sp"
+                android:layout_weight="1"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rain"
+                android:id="@+id/tv_rain"
+                android:textSize="16sp"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="wrap_content"
+                  android:layout_height="fill_parent"
+                  android:layout_weight="1"
+                  android:gravity="center_vertical|center_horizontal">
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enable"
+                android:id="@+id/sw_enable" android:checked="false"
+                />
+    </LinearLayout>
+</LinearLayout>
