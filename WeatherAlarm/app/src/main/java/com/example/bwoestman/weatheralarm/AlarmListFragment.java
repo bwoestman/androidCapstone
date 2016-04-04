@@ -28,6 +28,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
 
     private RecyclerView mAlarmRecyclerView;
+    private List<Alarm> mAlarms;
     private AlarmAdapter mAdapter;
 
     @Nullable
@@ -67,6 +68,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
 
             mAlarm = alarm;
             mTimeTv.setText(time);
+
             if (alarm.getEnabled() == 1)
             {
                 mEnableSw.setChecked(true);
@@ -102,6 +104,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
         {
             String time;
             Alarm alarm = mAlarms.get(position);
+            holder.bindAlarm(alarm);
 
             time = alarm.getHour() + ":" + alarm.getMinute();
 
@@ -117,6 +120,10 @@ public class AlarmListFragment extends Fragment implements AppInfo
 
     private void updateUI()
     {
+        DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+        mAlarms = dbHandler.getAlarms();
+        mAdapter = new AlarmAdapter(mAlarms);
+
         mAlarmRecyclerView.setAdapter(mAdapter);
     }
 
