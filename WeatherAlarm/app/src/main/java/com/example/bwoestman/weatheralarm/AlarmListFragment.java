@@ -64,19 +64,30 @@ public class AlarmListFragment extends Fragment implements AppInfo
         @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         public void bindAlarm(Alarm alarm)
         {
-            String time = alarm.getHour() + ":" + alarm.getMinute();
+//            String minute;
+//            String time;
+//
+//            if (alarm.getMinute() < 10)
+//            {
+//                minute = "0" + alarm.getMinute();
+//            }
+//            else
+//            {
+//                minute = Integer.toString(alarm.getMinute());
+//            }
+//
+//            time = alarm.getHour() + ":" + minute;
 
             mAlarm = alarm;
-            mTimeTv.setText(time);
-
-            if (alarm.getEnabled() == 1)
-            {
-                mEnableSw.setChecked(true);
-            }
-            else
-            {
-                mEnableSw.setChecked(false);
-            }
+//            mTimeTv.setText(time);
+//
+//            if (alarm.getEnabled() == 1)
+//            {
+//                mEnableSw.setChecked(true);
+//            } else
+//            {
+//                mEnableSw.setChecked(false);
+//            }
         }
     }
 
@@ -99,16 +110,37 @@ public class AlarmListFragment extends Fragment implements AppInfo
             return new AlarmHolder(view);
         }
 
+        @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         @Override
         public void onBindViewHolder(AlarmHolder holder, int position)
         {
-            String time;
+
             Alarm alarm = mAlarms.get(position);
             holder.bindAlarm(alarm);
 
-            time = alarm.getHour() + ":" + alarm.getMinute();
+            String minute;
+            String time;
+
+            if (alarm.getMinute() < 10)
+            {
+                minute = "0" + alarm.getMinute();
+            }
+            else
+            {
+                minute = Integer.toString(alarm.getMinute());
+            }
+
+            time = alarm.getHour() + ":" + minute;
 
             holder.mTimeTv.setText(time);
+
+            if (alarm.getEnabled() == 1)
+            {
+                holder.mEnableSw.setChecked(true);
+            } else
+            {
+                holder.mEnableSw.setChecked(false);
+            }
         }
 
         @Override

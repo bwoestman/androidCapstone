@@ -37,15 +37,15 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         {
             if (savedInstanceState == null)
             {
-//                AlarmListFragment alarmListFragment = new AlarmListFragment();
-//                alarmListFragment.setArguments(getIntent().getExtras());
+                AlarmListFragment alarmListFragment = new AlarmListFragment();
+                alarmListFragment.setArguments(getIntent().getExtras());
 
-                AlarmEditFragment alarmEditFragment = new AlarmEditFragment();
-                alarmEditFragment.setArguments(getIntent().getExtras());
+//                AlarmEditFragment alarmEditFragment = new AlarmEditFragment();
+//                alarmEditFragment.setArguments(getIntent().getExtras());
 
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.fragment_container, alarmEditFragment)
+                        .add(R.id.fragment_container, alarmListFragment)
                         .commit();
             }
         }
