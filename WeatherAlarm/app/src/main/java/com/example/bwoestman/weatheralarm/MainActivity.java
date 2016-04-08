@@ -10,6 +10,7 @@ import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import com.johnhiott.darkskyandroidlib.*;
 import com.johnhiott.darkskyandroidlib.models.Request;
 import com.johnhiott.darkskyandroidlib.models.WeatherResponse;
@@ -43,14 +44,37 @@ public class MainActivity extends AppCompatActivity implements AppInfo
                 AlarmListFragment tempFragment = new AlarmListFragment();
                 tempFragment.setArguments(getIntent().getExtras());
 
-//                AlarmEditFragment tempFragment = new AlarmEditFragment();
-//                tempFragment.setArguments(getIntent().getExtras());
-
                 getSupportFragmentManager()
                         .beginTransaction()
                         .add(R.id.fragment_container, tempFragment)
                         .commit();
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        switch (id)
+        {
+            case R.id.add_alarm:
+                goToEditView();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void goToEditView()
+    {
+        AlarmEditFragment aef = new AlarmEditFragment();
+
+        android.support.v4.app.FragmentTransaction transaction = this
+                .getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, aef)
+                .addToBackStack(null)
+                .commit();
     }
 }
