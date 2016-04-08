@@ -128,6 +128,7 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     public void updateAlarm(Alarm alarm)
     {
+        Log.d(TAG, "updateAlarm: ");
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
 

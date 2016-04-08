@@ -62,6 +62,25 @@ public class AlarmListFragment extends Fragment implements AppInfo
 
             mTimeTv = (TextView) itemView.findViewById(R.id.tv_time);
             mEnableSw = (Switch) itemView.findViewById(R.id.sw_enable);
+
+            mEnableSw.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    boolean enabled = mEnableSw.isChecked();
+                    if (enabled)
+                    {
+                        mAlarm.setEnabled(1);
+                    }
+                    else
+                    {
+                        mAlarm.setEnabled(0);
+                    }
+                    DBHandler db = new DBHandler(getContext(), null, null, 1);
+                    db.updateAlarm(mAlarm);
+                }
+            });
         }
 
         @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -70,18 +89,12 @@ public class AlarmListFragment extends Fragment implements AppInfo
             mAlarm = alarm;
         }
 
+        //todo ask how to put both onclick events in this
         @Override
         public void onClick(View v)
         {
             singletonAlarm.setClickedAlarm(mAlarm);
-
-            AlarmEditFragment alarmEditFragment = new AlarmEditFragment();
-
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager()
-                    .beginTransaction();
-            transaction.replace(R.id.fragment_container, alarmEditFragment)
-                    .addToBackStack(null)
-                    .commit();
+            goToEditFragment();
         }
     }
 
@@ -135,6 +148,15 @@ public class AlarmListFragment extends Fragment implements AppInfo
             {
                 holder.mEnableSw.setChecked(false);
             }
+
+            if (alarm.getEnabled() == 1)
+            {
+                holder.mEnableSw.setChecked(true);
+            }
+            else
+            {
+                holder.mEnableSw.setChecked(false);
+            }
         }
 
         @Override
@@ -175,4 +197,14 @@ public class AlarmListFragment extends Fragment implements AppInfo
         menu.clear();
         inflater.inflate(R.menu.main_menu, menu);
     }
+
+    public void goToEditFragment()
+    {
+        AlarmEditFragment alarmEditFragment = new AlarmEditFragment();
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager()
+                .beginTransaction();
+        transaction.replace(R.id.fragment_container, alarmEditFragment)
+                .addToBackStack(null)
+                .commit();}
 }

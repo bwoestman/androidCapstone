@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         switch (id)
         {
             case R.id.add_alarm:
+                SingletonAlarm.getInstance().setClickedAlarm(null);
                 goToEditView();
                 return true;
             default:
