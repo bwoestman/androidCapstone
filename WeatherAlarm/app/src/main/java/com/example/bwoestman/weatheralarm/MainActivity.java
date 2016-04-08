@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.LocationManager;
 import android.os.Build;
 import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;

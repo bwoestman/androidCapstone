@@ -1,5 +1,6 @@
 package com.example.bwoestman.weatheralarm;
 
+import android.location.LocationManager;
 import android.util.Log;
 import com.johnhiott.darkskyandroidlib.ForecastApi;
 import com.johnhiott.darkskyandroidlib.RequestBuilder;
@@ -29,7 +30,6 @@ public class AlarmWeather implements AppInfo
         ForecastApi.create(API_KEY);
 
         RequestBuilder weather = new RequestBuilder();
-
         final Request request = new Request();
 
         request.setLat("43.06");
