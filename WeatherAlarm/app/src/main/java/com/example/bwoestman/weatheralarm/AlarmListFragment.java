@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
         return view;
     }
 
-    private class AlarmHolder extends RecyclerView.ViewHolder
+    private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private TextView mTimeTv;
         private Switch mEnableSw;
@@ -57,6 +59,8 @@ public class AlarmListFragment extends Fragment implements AppInfo
         {
             super(itemView);
 
+            itemView.setOnClickListener(this);
+
             mTimeTv = (TextView) itemView.findViewById(R.id.tv_time);
             mEnableSw = (Switch) itemView.findViewById(R.id.sw_enable);
         }
@@ -64,30 +68,22 @@ public class AlarmListFragment extends Fragment implements AppInfo
         @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
         public void bindAlarm(Alarm alarm)
         {
-//            String minute;
-//            String time;
-//
-//            if (alarm.getMinute() < 10)
-//            {
-//                minute = "0" + alarm.getMinute();
-//            }
-//            else
-//            {
-//                minute = Integer.toString(alarm.getMinute());
-//            }
-//
-//            time = alarm.getHour() + ":" + minute;
-
             mAlarm = alarm;
-//            mTimeTv.setText(time);
-//
-//            if (alarm.getEnabled() == 1)
-//            {
-//                mEnableSw.setChecked(true);
-//            } else
-//            {
-//                mEnableSw.setChecked(false);
-//            }
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
+            singletonAlarm.setClickedAlarm(mAlarm);
+
+            AlarmEditFragment alarmEditFragment = new AlarmEditFragment();
+
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragment_container, alarmEditFragment)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 
@@ -158,6 +154,10 @@ public class AlarmListFragment extends Fragment implements AppInfo
 
         mAlarmRecyclerView.setAdapter(mAdapter);
     }
+
+    /**
+     * this method is for testing the db
+     */
 
     private void echoAlarms()
     {

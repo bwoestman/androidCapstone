@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements AppInfo
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+//        DBHandler db = new DBHandler(this, null, null, 1);
+//        db.deleteAllAlarms();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -37,15 +40,15 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         {
             if (savedInstanceState == null)
             {
-                AlarmListFragment alarmListFragment = new AlarmListFragment();
-                alarmListFragment.setArguments(getIntent().getExtras());
+//                AlarmListFragment tempFragment = new AlarmListFragment();
+//                tempFragment.setArguments(getIntent().getExtras());
 
-//                AlarmEditFragment alarmEditFragment = new AlarmEditFragment();
-//                alarmEditFragment.setArguments(getIntent().getExtras());
+                AlarmEditFragment tempFragment = new AlarmEditFragment();
+                tempFragment.setArguments(getIntent().getExtras());
 
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.fragment_container, alarmListFragment)
+                        .add(R.id.fragment_container, tempFragment)
                         .commit();
             }
         }

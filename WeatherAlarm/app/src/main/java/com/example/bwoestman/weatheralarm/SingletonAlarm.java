@@ -11,7 +11,8 @@ public class SingletonAlarm
 {
     private static SingletonAlarm ourInstance = new SingletonAlarm();
     private ArrayList<Alarm> alarms;
-    private Integer clickedAlarm = null;
+    private Alarm clickedAlarm;
+    private Integer clickedAlarmPosition = null;
     private int position;
 
     public static SingletonAlarm getInstance()
@@ -33,14 +34,14 @@ public class SingletonAlarm
         this.alarms = alarms;
     }
 
-    public Integer getClickedAlarm()
+    public Integer getClickedAlarmPosition()
     {
-        return clickedAlarm;
+        return clickedAlarmPosition;
     }
 
-    public void setClickedAlarm(Integer clickedAlarm)
+    public void setClickedAlarmPosition(Integer clickedAlarmPosition)
     {
-        this.clickedAlarm = clickedAlarm;
+        this.clickedAlarmPosition = clickedAlarmPosition;
     }
 
     public void addAlarm(Alarm alarm)
@@ -66,5 +67,15 @@ public class SingletonAlarm
     public void setPosition(int position)
     {
         this.position = position;
+    }
+
+    public Alarm getClickedAlarm()
+    {
+        return clickedAlarm;
+    }
+
+    public void setClickedAlarm(Alarm clickedAlarm)
+    {
+        this.clickedAlarm = clickedAlarm;
     }
 }

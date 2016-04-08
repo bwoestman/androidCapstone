@@ -1,14 +1,10 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.annotation.TargetApi;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.AlarmClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +18,10 @@ import java.util.ArrayList;
  * We 5:30p - 9:20p
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class AlarmEditFragment extends Fragment implements AppInfo
+public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClickListener
 {
+    private SingletonAlarm singletonAlarm;
+    private Alarm clickedAlarm;
     private TimePicker mTimePicker;
     private SeekBar mSbAdjustment;
     private SeekBar mSbRain;
@@ -56,17 +54,16 @@ public class AlarmEditFragment extends Fragment implements AppInfo
      *                           from a previous saved state as given here.
      * @return Return the View for the fragment's UI, or null.
      */
+    @TargetApi(Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_alarm_edit, container, false);
+        String rainText;
+        String adjText;
 
-        if (SingletonAlarm.getInstance().getClickedAlarm() == null)
-        {
-            SingletonAlarm.getInstance().setAlarms(new ArrayList<Alarm>());
-        }
+        View view = inflater.inflate(R.layout.fragment_alarm_edit, container, false);
 
         mTimePicker = (TimePicker) view.findViewById(R.id.timePicker);
 
@@ -77,7 +74,39 @@ public class AlarmEditFragment extends Fragment implements AppInfo
         mTvRainSbPosition = (TextView) view.findViewById(R.id.tvRainSbPosition);
 
         mBtnCancel = (Button) view.findViewById(R.id.btnCancel);
+        mBtnCancel.setOnClickListener(this);
         mBtnSave = (Button) view.findViewById(R.id.btnSave);
+        mBtnSave.setOnClickListener(this);
+
+        if (SingletonAlarm.getInstance().getClickedAlarmPosition() == null)
+        {
+            singletonAlarm = SingletonAlarm.getInstance();
+            singletonAlarm.setAlarms(new ArrayList<Alarm>());
+        }
+        else
+        {
+            singletonAlarm = SingletonAlarm.getInstance();
+        }
+
+        if (singletonAlarm.getClickedAlarm() != null)
+        {
+            clickedAlarm = singletonAlarm.getClickedAlarm();
+
+            rainText = ":" + clickedAlarm.getRain() + getActivity().getString(R.string
+                    .percent_symbol);
+
+            adjText = ":" + clickedAlarm.getAdjustment() + " minutes";
+
+
+            mTimePicker.setHour(clickedAlarm.getHour());
+            mTimePicker.setMinute(clickedAlarm.getMinute());
+
+            mSbRain.setProgress(clickedAlarm.getRain());
+            mTvRainSbPosition.setText(rainText);
+
+            mSbAdjustment.setProgress(clickedAlarm.getAdjustment());
+            mTvAdjustSbPostion.setText(adjText);
+        }
 
         //seekbar anonymous class for Adjustment setting
         mSbAdjustment.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
@@ -123,33 +152,6 @@ public class AlarmEditFragment extends Fragment implements AppInfo
             }
         });
 
-        mBtnSave.setOnClickListener(new AdapterView.OnClickListener()
-        {
-            /**
-             * Called when a view has been clicked.
-             *
-             * @param v The view that was clicked.
-             */
-            @Override
-            public void onClick(View v)
-            {
-
-                alarm = new Alarm();
-                alarm.setHour(mTimePicker.getCurrentHour());
-                alarm.setMinute(mTimePicker.getCurrentMinute());
-                alarm.setAdjustment(adjPosition);
-                alarm.setRain(rainPosition);
-
-                DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
-                dbHandler.addAlarm(alarm);
-                
-                //// TODO: 4/1/16 remove this after testing
-                //getContext().deleteDatabase("alarmDb.db");
-
-                goToListView();
-            }
-        });
-
         return view;
     }
 
@@ -163,5 +165,35 @@ public class AlarmEditFragment extends Fragment implements AppInfo
         transaction.replace(R.id.fragment_container, alf)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void getAlarmInfo()
+    {
+
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.btnSave:
+                alarm = new Alarm();
+                alarm.setHour(mTimePicker.getCurrentHour());
+                alarm.setMinute(mTimePicker.getCurrentMinute());
+                alarm.setAdjustment(adjPosition);
+                alarm.setRain(rainPosition);
+
+                DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+                dbHandler.addAlarm(alarm);
+
+                goToListView();
+                break;
+            case R.id.btnCancel:
+                goToListView();
+                break;
+            default:
+                break;
+        }
     }
 }
