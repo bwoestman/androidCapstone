@@ -126,6 +126,21 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         return alarms;
     }
 
+    public void updateAlarm(Alarm alarm)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        Long id = alarm.get_id();
+        values.put(COLUMN_HOUR, alarm.getHour());
+        values.put(COLUMN_MINUTE, alarm.getMinute());
+        values.put(COLUMN_RAIN, alarm.getRain());
+        values.put(COLUMN_ADJUSTMENT, alarm.getAdjustment());
+        values.put(COLUMN_ENABLED, alarm.getEnabled());
+
+        db.update(TABLE_ALARMS, values, "_id=" + id, null);
+    }
+
     public void dropTable()
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -136,7 +151,6 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     public void deleteAllAlarms()
     {
-        String query = "DELETE FROM " + TABLE_ALARMS + " WHERE _id > 0";
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ALARMS, null, null);
     }

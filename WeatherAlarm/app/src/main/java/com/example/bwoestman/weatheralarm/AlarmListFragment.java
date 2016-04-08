@@ -74,7 +74,6 @@ public class AlarmListFragment extends Fragment implements AppInfo
         @Override
         public void onClick(View v)
         {
-            SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
             singletonAlarm.setClickedAlarm(mAlarm);
 
             AlarmEditFragment alarmEditFragment = new AlarmEditFragment();

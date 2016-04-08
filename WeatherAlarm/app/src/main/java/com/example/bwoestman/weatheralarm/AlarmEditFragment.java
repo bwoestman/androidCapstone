@@ -92,11 +92,13 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         {
             clickedAlarm = singletonAlarm.getClickedAlarm();
 
-            rainText = ":" + clickedAlarm.getRain() + getActivity().getString(R.string
+            rainText = ": " + clickedAlarm.getRain() + getActivity().getString(R.string
                     .percent_symbol);
 
-            adjText = ":" + clickedAlarm.getAdjustment() + " minutes";
+            adjText = ": " + clickedAlarm.getAdjustment() + " minutes";
 
+            adjPosition = clickedAlarm.getAdjustment();
+            rainPosition = clickedAlarm.getRain();
 
             mTimePicker.setHour(clickedAlarm.getHour());
             mTimePicker.setMinute(clickedAlarm.getMinute());
@@ -178,16 +180,31 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         switch (v.getId())
         {
             case R.id.btnSave:
-                alarm = new Alarm();
-                alarm.setHour(mTimePicker.getCurrentHour());
-                alarm.setMinute(mTimePicker.getCurrentMinute());
-                alarm.setAdjustment(adjPosition);
-                alarm.setRain(rainPosition);
+                if (clickedAlarm == null)
+                {
+                    alarm = new Alarm();
+                    alarm.setHour(mTimePicker.getCurrentHour());
+                    alarm.setMinute(mTimePicker.getCurrentMinute());
+                    alarm.setAdjustment(adjPosition);
+                    alarm.setRain(rainPosition);
 
-                DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
-                dbHandler.addAlarm(alarm);
+                    DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+                    dbHandler.addAlarm(alarm);
 
-                goToListView();
+                    goToListView();
+                }
+                else
+                {
+                    clickedAlarm.setHour(mTimePicker.getCurrentHour());
+                    clickedAlarm.setMinute(mTimePicker.getCurrentMinute());
+                    clickedAlarm.setAdjustment(adjPosition);
+                    clickedAlarm.setRain(rainPosition);
+
+                    DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+                    dbHandler.updateAlarm(clickedAlarm);
+
+                    goToListView();
+                }
                 break;
             case R.id.btnCancel:
                 goToListView();

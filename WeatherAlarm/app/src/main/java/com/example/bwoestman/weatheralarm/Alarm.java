@@ -179,7 +179,7 @@ public class Alarm
 
     public String toString()
     {
-        return "hour: " + hour + ", minute: " + minute + ", adjustment: " +
+        return "_id:" + _id + "hour: " + hour + ", minute: " + minute + ", adjustment: " +
                 adjustment + ", rain: " + rain + ", " + enabled;
     }
 }
