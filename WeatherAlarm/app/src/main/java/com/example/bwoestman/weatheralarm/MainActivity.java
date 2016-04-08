@@ -40,11 +40,11 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         {
             if (savedInstanceState == null)
             {
-//                AlarmListFragment tempFragment = new AlarmListFragment();
-//                tempFragment.setArguments(getIntent().getExtras());
-
-                AlarmEditFragment tempFragment = new AlarmEditFragment();
+                AlarmListFragment tempFragment = new AlarmListFragment();
                 tempFragment.setArguments(getIntent().getExtras());
+
+//                AlarmEditFragment tempFragment = new AlarmEditFragment();
+//                tempFragment.setArguments(getIntent().getExtras());
 
                 getSupportFragmentManager()
                         .beginTransaction()

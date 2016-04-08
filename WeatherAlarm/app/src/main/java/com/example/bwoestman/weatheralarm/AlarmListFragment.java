@@ -9,9 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.CheckBox;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -38,6 +36,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_alarm_list, container, false);
 
         mAlarmRecyclerView = (RecyclerView) view.findViewById(R.id.alarm_recycler_view);
@@ -167,5 +166,13 @@ public class AlarmListFragment extends Fragment implements AppInfo
         {
             Log.d(TAG, "echoAlarms: " + a.toString());
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.main_menu, menu);
     }
 }
