@@ -12,13 +12,14 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_weight="1"
+                android:layout_height="0dp" android:layout_weight="1"
                 >
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Time"
-                    android:id="@+id/tvTime" android:textSize="24dp"/>
+                    android:text="@string/time"
+                    android:id="@+id/tvTime"
+                    android:textSize="24sp"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -44,14 +45,15 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adjustment"
-                    android:id="@+id/tvAdjustment" android:textSize="24dp"
+                    android:text="@string/adjustment"
+                    android:id="@+id/tvAdjustment"
+                    android:textSize="24sp"
                     />
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvAdjustSbPosition"
-                    android:textSize="24dp"/>
+                    android:textSize="24sp"/>
         </LinearLayout>
         <SeekBar
                 android:layout_width="match_parent"
@@ -70,8 +72,8 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rain"
-                    android:id="@+id/tvRain" android:textSize="24dp"
+                    android:text="@string/rain"
+                    android:id="@+id/tvRain" android:textSize="24sp"
                     />
             <TextView
                     android:layout_width="wrap_content"
@@ -91,13 +93,13 @@
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:id="@+id/btnCancel" android:layout_weight="1"/>
         <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Save"
+                android:text="@string/save"
                 android:id="@+id/btnSave" android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>

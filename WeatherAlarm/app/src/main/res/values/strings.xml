@@ -7,4 +7,8 @@
     <string name="rain">Rain</string>
     <string name="percent_symbol">%</string>
     <string name="add_alarm">Add Alarm</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="time">Time</string>
+    <string name="adjustment">Adjustment</string>
 </resources>

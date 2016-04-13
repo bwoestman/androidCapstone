@@ -25,7 +25,7 @@ public class AlarmWeather implements AppInfo
     /**
      * Gets current weather forcast.
      */
-    public void getCurrentWeatherForcast()
+    public void getCurrentWeatherForecast()
     {
         ForecastApi.create(API_KEY);
 

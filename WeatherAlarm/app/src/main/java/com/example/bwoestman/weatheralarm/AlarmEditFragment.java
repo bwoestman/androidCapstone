@@ -33,7 +33,6 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     private Integer adjPosition = 0;
     private Integer rainPosition = 0;
 
-
     private Alarm alarm;
 
     /**
@@ -70,13 +69,15 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         mSbAdjustment = (SeekBar) view.findViewById(R.id.sbAdjustment);
         mSbRain = (SeekBar) view.findViewById(R.id.sbRain);
 
-        mTvAdjustSbPostion = (TextView) view.findViewById(R.id.tvAdjustSbPostion);
+        mTvAdjustSbPostion = (TextView) view.findViewById(R.id.tvAdjustSbPosition);
         mTvRainSbPosition = (TextView) view.findViewById(R.id.tvRainSbPosition);
 
         mBtnCancel = (Button) view.findViewById(R.id.btnCancel);
         mBtnCancel.setOnClickListener(this);
         mBtnSave = (Button) view.findViewById(R.id.btnSave);
         mBtnSave.setOnClickListener(this);
+
+        mTimePicker.setIs24HourView(true);
 
         if (SingletonAlarm.getInstance().getClickedAlarmPosition() == null)
         {
