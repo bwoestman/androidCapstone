@@ -172,6 +172,8 @@ public class AlarmListFragment extends Fragment implements AppInfo
         mAlarms = dbHandler.getAlarms();
         mAdapter = new AlarmAdapter(mAlarms);
 
+        singletonAlarm.setAlarms((ArrayList<Alarm>) mAlarms);
+
         mAlarmRecyclerView.setAdapter(mAdapter);
     }
 

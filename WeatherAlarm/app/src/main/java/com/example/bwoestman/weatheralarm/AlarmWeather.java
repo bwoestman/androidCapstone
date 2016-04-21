@@ -32,8 +32,8 @@ public class AlarmWeather implements AppInfo
         RequestBuilder weather = new RequestBuilder();
         final Request request = new Request();
 
-        request.setLat("43.06");
-        request.setLng("-89.40");
+        request.setLat("43.8014");
+        request.setLng("-90.2396");
         request.setUnits(Request.Units.US);
         request.setLanguage(Request.Language.ENGLISH);
 
@@ -44,8 +44,7 @@ public class AlarmWeather implements AppInfo
             {
                 currentPrecip = Double.valueOf(weatherResponse.getCurrently()
                         .getPrecipProbability());
-
-                Log.d(TAG, "success: precip " + currentPrecip);
+                Log.d(TAG, "success: precip" + currentPrecip);
             }
 
             @Override

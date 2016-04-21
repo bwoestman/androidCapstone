@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.provider.AlarmClock;
 
+import java.util.Calendar;
+
 /**
  * Created by Brian Woestman on 2/28/16.
  * Android Programming
@@ -14,13 +16,27 @@ public class Alarm
     private Long _id;
     private Integer hour;
     private Integer minute;
+    private Calendar calendar;
     private Integer rain;
     private Integer adjustment;
     private Integer enabled = 1;
     private Intent alarmIntent;
 
+    /**
+     * Instantiates a new Alarm.
+     */
     public Alarm(){}
 
+    /**
+     * Instantiates a new Alarm.
+     *
+     * @param _id        the id
+     * @param hour       the hour
+     * @param minute     the minute
+     * @param rain       the rain
+     * @param adjustment the adjustment
+     * @param enabled    the enabled
+     */
     public Alarm (Long _id, Integer hour, Integer minute, Integer rain, Integer
             adjustment, Integer enabled)
     {
@@ -94,6 +110,28 @@ public class Alarm
     }
 
     /**
+     * Gets calendar.
+     *
+     * @return the calendar
+     */
+    public Calendar getCalendar()
+    {
+        return calendar;
+    }
+
+
+    /**
+     * Sets calendar.
+     *
+     * @param calendar the calendar
+     */
+
+    public void setCalendar(Calendar calendar)
+    {
+        this.calendar = calendar;
+    }
+
+    /**
      * Gets rain.
      *
      * @return the rain
@@ -133,11 +171,21 @@ public class Alarm
         this.adjustment = adjustment;
     }
 
+    /**
+     * Gets enabled.
+     *
+     * @return the enabled
+     */
     public Integer getEnabled()
     {
         return enabled;
     }
 
+    /**
+     * Sets enabled.
+     *
+     * @param enabled the enabled
+     */
     public void setEnabled(Integer enabled)
     {
         this.enabled = enabled;

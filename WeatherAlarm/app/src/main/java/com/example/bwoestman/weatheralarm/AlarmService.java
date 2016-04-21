@@ -6,17 +6,23 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by Brian Woestman on 4/12/16.
  * Android Programming
  * We 5:30p - 9:20p
  */
-public class AlarmService extends Service
+public class AlarmService extends Service implements AppInfo
 {
+    private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
     @Override
     public void onCreate()
     {
         super.onCreate();
+
+        ArrayList<Alarm> alarms = singletonAlarm.getAlarms();
+
         Toast.makeText(this, "MyAlarmService.onCreate()", Toast.LENGTH_SHORT).show();
     }
 

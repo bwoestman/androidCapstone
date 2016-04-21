@@ -141,6 +141,14 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         db.update(TABLE_ALARMS, values, "_id=" + id, null);
     }
 
+    public void deleteAlarm(Alarm alarm)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "DELETE FROM " + TABLE_ALARMS + " WHERE _id = " + alarm.get_id();
+
+        db.execSQL(sql);
+    }
+
     public void dropTable()
     {
         SQLiteDatabase db = this.getWritableDatabase();

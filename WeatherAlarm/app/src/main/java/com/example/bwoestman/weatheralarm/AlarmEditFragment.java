@@ -183,6 +183,9 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             case R.id.btnSave:
                 if (clickedAlarm == null)
                 {
+                    ArrayList<Alarm> alarms;
+                    AlarmController ac = new AlarmController();
+
                     alarm = new Alarm();
                     alarm.setHour(mTimePicker.getCurrentHour());
                     alarm.setMinute(mTimePicker.getCurrentMinute());
@@ -191,6 +194,19 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
 
                     DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
                     dbHandler.addAlarm(alarm);
+
+                    alarms = (ArrayList<Alarm>) dbHandler.getAlarms();
+                    singletonAlarm.setAlarms(alarms);
+
+                    if (alarms != null)
+                    {
+                        for (Alarm a : alarms)
+                        {
+                            ac = new AlarmController();
+                            ac.createAlarmCalendar(a);
+                            ac.createTimedTask(getContext(), a);
+                        }
+                    }
 
                     goToListView();
                 }
