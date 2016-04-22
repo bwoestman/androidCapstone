@@ -73,18 +73,18 @@ public class AlarmController implements AppInfo
         int adjDif;
         double currentPrecip;
 
-
         cal = alarm.getCalendar();
         adjSec = alarm.getAdjustment() * 60;
         calTimeMs = cal.getTimeInMillis();
         //difference between current time and alarm time
-        dif = System.currentTimeMillis() - calTimeMs;
+        dif = calTimeMs - System.currentTimeMillis();
         difSec = (int) (dif / 1000);
         //difference between adjustment minutes and time between now and when the alarm
         // is set for
         adjDif = difSec - adjSec;
 
-        if (difSec > 0 && adjDif > 0)
+        //if the alarm with adjustment is set for the future
+        if (adjDif > 0)
         {
             Intent intent = new Intent(context, AlarmService.class);
 
@@ -101,9 +101,9 @@ public class AlarmController implements AppInfo
 
             Log.d(TAG, "createTimedTask: " + difSec);
         }
-        else if (adjDif > 0)
+        else if (difSec < 0)
         {
-            checkPrecipThreshold(alarm);
+
         }
         else
         {
