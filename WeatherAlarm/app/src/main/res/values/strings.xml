@@ -11,4 +11,5 @@
     <string name="save">Save</string>
     <string name="time">Time</string>
     <string name="adjustment">Adjustment</string>
+    <string name="adjustment_error">Alarm time must exceed the adjustment</string>
 </resources>

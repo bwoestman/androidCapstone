@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.provider.AlarmClock;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import java.util.Calendar;
 public class AlarmController implements AppInfo
 {
     private PendingIntent pendingIntent;
+
     /**
      * Create alarm.
      *
@@ -113,35 +115,54 @@ public class AlarmController implements AppInfo
         }
     }
 
+    /**
+     * this function checks that the alarm is set for the future and adds 24 hours
+     * if the time has already passed
+     * @param alarm
+     */
+
     public void validateAlarmTime(Alarm alarm)
     {
         Calendar alarmCal;
-        int adjSec;
-        int difSec;
-        int adjDif;
+
         Long calTimeMs;
         Long dif;
 
         alarmCal = alarm.getCalendar();
-        adjSec = alarm.getAdjustment() * 60;
+
+        //calendar time in ms
         calTimeMs = alarmCal.getTimeInMillis();
 
         //difference between alarm and current time
         dif = calTimeMs - System.currentTimeMillis();
-        difSec = (int) (dif / 1000);
 
-        //difference with adjustment calculation
-        adjDif = difSec - adjSec;
-
-        //if the alarm with adjustment is set for the future
-        if (adjDif > 0)
-        {
-            Log.d(TAG, "validateAlarmTime: goodAlarm" + alarm.toString());
-        }
-        else if (difSec < 0)
+        //check if alarm is set for the future and push up 24 hours if it has
+        //passed already
+        if (dif < 0)
         {
             alarmCal.add(Calendar.HOUR, 24);
         }
+    }
+
+    public boolean validateAlarmAdj(Alarm alarm)
+    {
+        Calendar alarmCal;
+
+        long calTimeMs;
+        long adjInMs;
+        long currentTimeInMs;
+        long dif;
+        long adjDiff;
+
+        alarmCal = alarm.getCalendar();
+        adjInMs = (long) alarm.getAdjustment() * 60 * 1000;
+        calTimeMs = alarmCal.getTimeInMillis();
+        currentTimeInMs = System.currentTimeMillis();
+
+        dif = calTimeMs - currentTimeInMs;
+        adjDiff = dif - adjInMs;
+
+        return (adjDiff * 1000 * 60) > 0;
     }
 
     public void checkPrecipThreshold(Alarm alarm)

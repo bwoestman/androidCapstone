@@ -205,8 +205,19 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                         {
                             ac = new AlarmController();
                             ac.createAlarmCalendar(a);
-                            //ac.createTimedTask(getContext(), a);
-                            ac.validateAlarmTime(a, getContext());
+                            ac.validateAlarmTime(a);
+                            if (ac.validateAlarmAdj(a))
+                            {
+                                ac.createTimedTask(getContext(), a);
+                            }
+                            else
+                            {
+                                String error = getResources().getString(R.string
+                                        .adjustment_error);
+                                dbHandler.deleteAlarm(a);
+                                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT)
+                                        .show();
+                            }
                         }
                     }
 

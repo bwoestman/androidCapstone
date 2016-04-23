@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements AppInfo
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-//        DBHandler db = new DBHandler(this, null, null, 1);
-//        db.deleteAllAlarms();
+        DBHandler db = new DBHandler(this, null, null, 1);
+        db.deleteAllAlarms();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
