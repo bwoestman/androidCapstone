@@ -205,7 +205,12 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                         {
                             ac = new AlarmController();
                             ac.createAlarmCalendar(a);
+
+                            //check that alarm is for the future and bump 24 hours if
+                            // it's already passed
                             ac.validateAlarmTime(a);
+
+                            //check that alarm adj doesn't exceed the alarm time
                             if (ac.validateAlarmAdj(a))
                             {
                                 ac.createTimedTask(getContext(), a);
