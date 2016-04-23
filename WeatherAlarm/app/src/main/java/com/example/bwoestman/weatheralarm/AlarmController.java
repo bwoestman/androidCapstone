@@ -66,48 +66,63 @@ public class AlarmController implements AppInfo
         alarm.setCalendar(calendar);
     }
 
+//    public void createTimedTask(Context context, Alarm alarm)
+//    {
+//        Calendar cal;
+//        int adjSec;
+//        Long calTimeMs;
+//        Long dif;
+//        int difSec;
+//
+//        cal = alarm.getCalendar();
+//        adjSec = alarm.getAdjustment() * 60;
+//        calTimeMs = cal.getTimeInMillis();
+//
+//        //difference between current time and alarm time
+//        dif = calTimeMs - System.currentTimeMillis();
+//        difSec = (int) (dif / 1000);
+//
+//        Intent intent = new Intent(context, AlarmService.class);
+//
+//        pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+//
+//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context
+//                .ALARM_SERVICE);
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//
+//        calendar.add(Calendar.SECOND, difSec);
+//
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+//
+//        Log.d(TAG, "createTimedTask: " + difSec);
+//    }
+
     public void createTimedTask(Context context, Alarm alarm)
     {
-        Calendar cal;
-        int adjSec;
-        Long calTimeMs;
-        Long dif;
-        int difSec;
-        int adjDif;
+        Calendar cal = alarm.getCalendar();
+        int _id = alarm.get_id().intValue();
 
-        cal = alarm.getCalendar();
-        adjSec = alarm.getAdjustment() * 60;
-        calTimeMs = cal.getTimeInMillis();
-        //difference between current time and alarm time
-        dif = calTimeMs - System.currentTimeMillis();
-        difSec = (int) (dif / 1000);
-        //difference between adjustment minutes and time between now and when the alarm
-        // is set for
-        adjDif = difSec - adjSec;
+        //todo remove this string
+        String intentAlert = _id + " intent was saved";
 
-        //if the alarm with adjustment is set for the future
-        if (adjDif > 0)
-        {
-            Intent intent = new Intent(context, AlarmService.class);
+        Intent intent = new Intent(context, AlarmService.class);
 
-            pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+        pendingIntent = PendingIntent.getService(context, _id, intent, 0);
 
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context
-                    .ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context
+                .ALARM_SERVICE);
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
 
-            calendar.add(Calendar.SECOND, difSec);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-            Log.d(TAG, "createTimedTask: " + difSec);
-        }
+        Log.d(TAG, "createTimedTask: " + intentAlert);
     }
 
     /**
      * this function checks that the alarm is set for the future and adds 24 hours
      * if the time has already passed
+     *
      * @param alarm
      */
 

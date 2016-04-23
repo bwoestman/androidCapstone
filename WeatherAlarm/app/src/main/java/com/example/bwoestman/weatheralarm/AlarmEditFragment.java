@@ -247,6 +247,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                     {
                         DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
                         dbHandler.updateAlarm(clickedAlarm);
+                        ac.createTimedTask(getContext(), clickedAlarm);
                         goToListView();
                     }
                     else
