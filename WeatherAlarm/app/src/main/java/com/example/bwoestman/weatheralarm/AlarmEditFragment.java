@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -178,13 +179,13 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     @Override
     public void onClick(View v)
     {
+        AlarmController ac = new AlarmController();
         switch (v.getId())
         {
             case R.id.btnSave:
                 if (clickedAlarm == null)
                 {
                     ArrayList<Alarm> alarms;
-                    AlarmController ac = new AlarmController();
 
                     alarm = new Alarm();
                     alarm.setHour(mTimePicker.getCurrentHour());
@@ -204,7 +205,8 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                         {
                             ac = new AlarmController();
                             ac.createAlarmCalendar(a);
-                            ac.createTimedTask(getContext(), a);
+                            //ac.createTimedTask(getContext(), a);
+                            ac.validateAlarmTime(a, getContext());
                         }
                     }
 

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.security.KeyStore;
 import java.util.Calendar;
 
 /**
@@ -109,6 +110,37 @@ public class AlarmController implements AppInfo
         {
             DBHandler db = new DBHandler(context, null, null, 1);
             db.deleteAlarm(alarm);
+        }
+    }
+
+    public void validateAlarmTime(Alarm alarm)
+    {
+        Calendar alarmCal;
+        int adjSec;
+        int difSec;
+        int adjDif;
+        Long calTimeMs;
+        Long dif;
+
+        alarmCal = alarm.getCalendar();
+        adjSec = alarm.getAdjustment() * 60;
+        calTimeMs = alarmCal.getTimeInMillis();
+
+        //difference between alarm and current time
+        dif = calTimeMs - System.currentTimeMillis();
+        difSec = (int) (dif / 1000);
+
+        //difference with adjustment calculation
+        adjDif = difSec - adjSec;
+
+        //if the alarm with adjustment is set for the future
+        if (adjDif > 0)
+        {
+            Log.d(TAG, "validateAlarmTime: goodAlarm" + alarm.toString());
+        }
+        else if (difSec < 0)
+        {
+            alarmCal.add(Calendar.HOUR, 24);
         }
     }
 
