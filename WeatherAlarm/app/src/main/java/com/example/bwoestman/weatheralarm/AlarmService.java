@@ -21,7 +21,14 @@ public class AlarmService extends Service implements AppInfo
     {
         super.onCreate();
 
+        SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
         ArrayList<Alarm> alarms = singletonAlarm.getAlarms();
+        AlarmController ac = new AlarmController();
+
+        if (alarms != null)
+        {
+
+        }
 
         Toast.makeText(this, "MyAlarmService.onCreate()", Toast.LENGTH_SHORT).show();
     }

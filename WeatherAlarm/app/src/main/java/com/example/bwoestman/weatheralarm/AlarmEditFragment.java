@@ -214,7 +214,14 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                             //check that alarm adj doesn't exceed the alarm time
                             if (ac.validateAlarmAdj(a))
                             {
-                                ac.createTimedTask(getContext(), a);
+                                if (ac.setAlarm(a))
+                                {
+                                    ac.createAlarm(getActivity(), a);
+                                }
+                                else
+                                {
+                                    ac.createTimedTask(getContext(), a);
+                                }
                             }
                             else
                             {
@@ -245,9 +252,16 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                     //check that alarm adj doesn't exceed the alarm time
                     if (ac.validateAlarmAdj(clickedAlarm))
                     {
+                        if (ac.setAlarm(clickedAlarm))
+                        {
+                            ac.createAlarm(getActivity(), clickedAlarm);
+                        }
+                        else
+                        {
+                            ac.createTimedTask(getContext(), clickedAlarm);
+                        }
                         DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
                         dbHandler.updateAlarm(clickedAlarm);
-                        ac.createTimedTask(getContext(), clickedAlarm);
                         goToListView();
                     }
                     else

@@ -33,12 +33,20 @@ public class AlarmController implements AppInfo
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void createAlarm(Activity activity, Alarm alarm)
     {
+        int hour;
+        int min;
+
+        hour = alarm.getHour();
+        min = alarm.getMinute();
+
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
 
-        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, alarm.getHour());
-        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, alarm.getMinute());
+        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
+        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, min);
         alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
         activity.startActivity(alarmIntent);
+
+        Log.d(TAG, "createAlarm: alarmSet" + hour + ":" + min);
     }
 
     public void createAlarmCalendar(Alarm alarm)
@@ -65,39 +73,6 @@ public class AlarmController implements AppInfo
 
         alarm.setCalendar(calendar);
     }
-
-//    public void createTimedTask(Context context, Alarm alarm)
-//    {
-//        Calendar cal;
-//        int adjSec;
-//        Long calTimeMs;
-//        Long dif;
-//        int difSec;
-//
-//        cal = alarm.getCalendar();
-//        adjSec = alarm.getAdjustment() * 60;
-//        calTimeMs = cal.getTimeInMillis();
-//
-//        //difference between current time and alarm time
-//        dif = calTimeMs - System.currentTimeMillis();
-//        difSec = (int) (dif / 1000);
-//
-//        Intent intent = new Intent(context, AlarmService.class);
-//
-//        pendingIntent = PendingIntent.getService(context, 0, intent, 0);
-//
-//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context
-//                .ALARM_SERVICE);
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//
-//        calendar.add(Calendar.SECOND, difSec);
-//
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-//
-//        Log.d(TAG, "createTimedTask: " + difSec);
-//    }
 
     public void createTimedTask(Context context, Alarm alarm)
     {
@@ -168,6 +143,25 @@ public class AlarmController implements AppInfo
         adjDiff = dif - adjInMs;
 
         return (adjDiff * 1000 * 60) > 0;
+    }
+
+    public boolean setAlarm(Alarm alarm)
+    {
+        long adjMs;
+        long calTimeMs;
+        long currTime;
+        long adjustedCalTimeMs;
+        long decideTime;
+
+        calTimeMs = alarm.getCalendar().getTimeInMillis();
+        adjMs = alarm.getAdjustment() * 60 * 1000;
+        currTime = System.currentTimeMillis();
+
+        adjustedCalTimeMs = calTimeMs - adjMs;
+
+        decideTime = adjustedCalTimeMs - currTime;
+
+        return decideTime < 600000;
     }
 
     public void checkPrecipThreshold(Alarm alarm)
