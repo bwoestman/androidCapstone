@@ -74,7 +74,6 @@ public class AlarmController implements AppInfo
         Long dif;
         int difSec;
         int adjDif;
-        double currentPrecip;
 
         cal = alarm.getCalendar();
         adjSec = alarm.getAdjustment() * 60;
@@ -103,15 +102,6 @@ public class AlarmController implements AppInfo
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
             Log.d(TAG, "createTimedTask: " + difSec);
-        }
-        else if (difSec < 0)
-        {
-
-        }
-        else
-        {
-            DBHandler db = new DBHandler(context, null, null, 1);
-            db.deleteAlarm(alarm);
         }
     }
 

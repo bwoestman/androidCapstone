@@ -185,6 +185,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             case R.id.btnSave:
                 if (clickedAlarm == null)
                 {
+                    boolean alarmsOk = true;
                     ArrayList<Alarm> alarms;
 
                     alarm = new Alarm();
@@ -193,6 +194,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                     alarm.setAdjustment(adjPosition);
                     alarm.setRain(rainPosition);
 
+                    //todo redo this part -> this shouldn't happen at every save
                     DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
                     dbHandler.addAlarm(alarm);
 
@@ -203,7 +205,6 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                     {
                         for (Alarm a : alarms)
                         {
-                            ac = new AlarmController();
                             ac.createAlarmCalendar(a);
 
                             //check that alarm is for the future and bump 24 hours if
@@ -222,11 +223,11 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                                 dbHandler.deleteAlarm(a);
                                 Toast.makeText(getContext(), error, Toast.LENGTH_SHORT)
                                         .show();
+                                alarmsOk = false;
                             }
                         }
+                        if (alarmsOk) goToListView();
                     }
-
-                    goToListView();
                 }
                 else
                 {
