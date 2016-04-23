@@ -236,10 +236,26 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                     clickedAlarm.setAdjustment(adjPosition);
                     clickedAlarm.setRain(rainPosition);
 
-                    DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
-                    dbHandler.updateAlarm(clickedAlarm);
+                    ac.createAlarmCalendar(clickedAlarm);
 
-                    goToListView();
+                    //check that alarm is for the future and bump 24 hours if
+                    // it's already passed
+                    ac.validateAlarmTime(clickedAlarm);
+
+                    //check that alarm adj doesn't exceed the alarm time
+                    if (ac.validateAlarmAdj(clickedAlarm))
+                    {
+                        DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+                        dbHandler.updateAlarm(clickedAlarm);
+                        goToListView();
+                    }
+                    else
+                    {
+                        String error = getResources().getString(R.string
+                                .adjustment_error);
+                        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT)
+                                .show();
+                    }
                 }
                 break;
             case R.id.btnCancel:
