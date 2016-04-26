@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.*;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -83,23 +84,5 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         transaction.replace(R.id.fragment_container, aef)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-//
-//        alarms = singletonAlarm.getAlarms();
-//
-//        if (alarms != null)
-//        {
-//            for (Alarm a : alarms)
-//            {
-//                ac = new AlarmController();
-//                ac.createAlarmCalendar(a);
-//                ac.createTimedTask(this, a.getCalendar());
-//            }
-//        }
     }
 }
