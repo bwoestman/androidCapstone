@@ -161,22 +161,22 @@ public class AlarmController implements AppInfo
 
         decideTime = adjustedCalTimeMs - currTime;
 
-        return decideTime < 600000;
+        //todo change this back to 600000
+        return decideTime < 1;
     }
 
-    public void checkPrecipThreshold(Alarm alarm)
+    public boolean checkPrecipThreshold(Alarm alarm)
     {
         AlarmWeather aw = new AlarmWeather();
+        SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
+
         double rain;
         double currentPrecip;
 
         rain = alarm.getRain() / 100;
         aw.getCurrentWeatherForecast();
-        currentPrecip = aw.getCurrentPrecip();
+        currentPrecip = singletonAlarm.getCurrPrecip();
 
-        if (rain < currentPrecip)
-        {
-            Log.d(TAG, "timeToSetAlarm: " + rain);
-        }
+        return rain < currentPrecip;
     }
 }

@@ -126,6 +126,36 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         return alarms;
     }
 
+    public Alarm getAlarm(Long id)
+    {
+        Alarm alarm;
+        Cursor cursor = null;
+        SQLiteDatabase db;
+        String query;
+
+        db = this.getReadableDatabase();
+        query = "SELECT _id, hour, minute, rain, adjustment, enabled FROM " +
+                TABLE_ALARMS + " WHERE _id = " + id;
+
+        cursor = db.rawQuery(query, null);
+        if (cursor.getCount() == 1)
+        {
+            cursor.moveToFirst();
+
+            Long _id = cursor.getLong(0);
+            Integer hour = cursor.getInt(1);
+            Integer minute = cursor.getInt(2);
+            Integer rain = cursor.getInt(3);
+            Integer adjustment = cursor.getInt(4);
+            Integer enabled = cursor.getInt(5);
+
+            return new Alarm(_id, hour, minute, rain, adjustment,
+                    enabled);
+        }
+        cursor.close();
+        return null;
+    }
+
     public void updateAlarm(Alarm alarm)
     {
         SQLiteDatabase db = getWritableDatabase();

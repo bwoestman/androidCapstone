@@ -45,6 +45,9 @@ public class AlarmWeather implements AppInfo
                 currentPrecip = Double.valueOf(weatherResponse.getCurrently()
                         .getPrecipProbability());
                 Log.d(TAG, "success: precip" + currentPrecip);
+
+                SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
+                singletonAlarm.setCurrPrecip(currentPrecip);
             }
 
             @Override

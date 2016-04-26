@@ -14,6 +14,7 @@ public class SingletonAlarm
     private Alarm clickedAlarm;
     private Integer clickedAlarmPosition = null;
     private int position;
+    private double currPrecip;
 
     public static SingletonAlarm getInstance()
     {
@@ -77,5 +78,15 @@ public class SingletonAlarm
     public void setClickedAlarm(Alarm clickedAlarm)
     {
         this.clickedAlarm = clickedAlarm;
+    }
+
+    public double getCurrPrecip()
+    {
+        return currPrecip;
+    }
+
+    public void setCurrPrecip(double currPrecip)
+    {
+        this.currPrecip = currPrecip;
     }
 }
