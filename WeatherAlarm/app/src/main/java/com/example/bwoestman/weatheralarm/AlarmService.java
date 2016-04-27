@@ -15,6 +15,13 @@ import java.util.ArrayList;
  * Android Programming
  * We 5:30p - 9:20p
  */
+
+/**
+ * this class is called when the app wakes up after being called by the alarm manager -
+ * its purpose, on start, is to check the alarm that set the intent that called it and
+ * then determine if the alarm needs to be set based on the precipitation.
+ */
+
 public class AlarmService extends Service implements AppInfo
 {
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
@@ -45,8 +52,6 @@ public class AlarmService extends Service implements AppInfo
     {
         super.onStart(intent, startId);
 
-        Log.d(TAG, "onStart: service started " + startId);
-
         long id = (long) startId;
         SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
         Alarm alarm;
@@ -54,7 +59,12 @@ public class AlarmService extends Service implements AppInfo
 
         DBHandler db = new DBHandler(getApplicationContext(), null, null, 1);
         alarm = db.getAlarm(id);
-        ac.checkPrecipThreshold(alarm);
+
+
+        if (ac.checkPrecipThreshold(alarm))
+        {
+            
+        }
     }
 
     @Override

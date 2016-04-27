@@ -18,6 +18,11 @@ import java.util.ArrayList;
  * Android Programming
  * We 5:30p - 9:20p
  */
+
+/**
+ * this class is a fragment where the alarms are edited
+ */
+
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClickListener
 {
@@ -159,6 +164,10 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         return view;
     }
 
+    /**
+     * this class switches to the AlarmListFragment
+     */
+
     public void goToListView()
     {
         AlarmListFragment alf = new AlarmListFragment();
@@ -171,10 +180,10 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                 .commit();
     }
 
-    public void getAlarmInfo()
-    {
-
-    }
+    /**
+     * this method is the on click controller for the save / cancel buttons
+     * @param v
+     */
 
     @Override
     public void onClick(View v)
@@ -185,92 +194,11 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             case R.id.btnSave:
                 if (clickedAlarm == null)
                 {
-                    boolean alarmsOk = true;
-                    ArrayList<Alarm> alarms;
-
-                    alarm = new Alarm();
-                    alarm.setHour(mTimePicker.getCurrentHour());
-                    alarm.setMinute(mTimePicker.getCurrentMinute());
-                    alarm.setAdjustment(adjPosition);
-                    alarm.setRain(rainPosition);
-
-                    //todo redo this part -> this shouldn't happen at every save
-                    DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
-                    dbHandler.addAlarm(alarm);
-
-                    alarms = (ArrayList<Alarm>) dbHandler.getAlarms();
-                    singletonAlarm.setAlarms(alarms);
-
-                    if (alarms != null)
-                    {
-                        for (Alarm a : alarms)
-                        {
-                            ac.createAlarmCalendar(a);
-
-                            //check that alarm is for the future and bump 24 hours if
-                            // it's already passed
-                            ac.validateAlarmTime(a);
-
-                            //check that alarm adj doesn't exceed the alarm time
-                            if (ac.validateAlarmAdj(a))
-                            {
-                                if (ac.setAlarm(a))
-                                {
-                                    ac.createAlarm(getActivity(), a);
-                                }
-                                else
-                                {
-                                    ac.createTimedTask(getContext(), a);
-                                }
-                            }
-                            else
-                            {
-                                String error = getResources().getString(R.string
-                                        .adjustment_error);
-                                dbHandler.deleteAlarm(a);
-                                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT)
-                                        .show();
-                                alarmsOk = false;
-                            }
-                        }
-                        if (alarmsOk) goToListView();
-                    }
+                    saveNewAlarm(ac);
                 }
                 else
                 {
-                    clickedAlarm.setHour(mTimePicker.getCurrentHour());
-                    clickedAlarm.setMinute(mTimePicker.getCurrentMinute());
-                    clickedAlarm.setAdjustment(adjPosition);
-                    clickedAlarm.setRain(rainPosition);
-
-                    ac.createAlarmCalendar(clickedAlarm);
-
-                    //check that alarm is for the future and bump 24 hours if
-                    // it's already passed
-                    ac.validateAlarmTime(clickedAlarm);
-
-                    //check that alarm adj doesn't exceed the alarm time
-                    if (ac.validateAlarmAdj(clickedAlarm))
-                    {
-                        if (ac.setAlarm(clickedAlarm))
-                        {
-                            ac.createAlarm(getActivity(), clickedAlarm);
-                        }
-                        else
-                        {
-                            ac.createTimedTask(getContext(), clickedAlarm);
-                        }
-                        DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
-                        dbHandler.updateAlarm(clickedAlarm);
-                        goToListView();
-                    }
-                    else
-                    {
-                        String error = getResources().getString(R.string
-                                .adjustment_error);
-                        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT)
-                                .show();
-                    }
+                    saveExistingAlarm(ac);
                 }
                 break;
             case R.id.btnCancel:
@@ -278,6 +206,102 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * this method saves new alarms to the database after they've been validated
+     * @param ac
+     */
+
+    public void saveNewAlarm(AlarmController ac)
+    {
+        boolean alarmsOk = true;
+        ArrayList<Alarm> alarms;
+
+        alarm = new Alarm();
+        alarm.setHour(mTimePicker.getCurrentHour());
+        alarm.setMinute(mTimePicker.getCurrentMinute());
+        alarm.setAdjustment(adjPosition);
+        alarm.setRain(rainPosition);
+
+        //todo redo this part -> this shouldn't happen at every save
+        DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+        dbHandler.addAlarm(alarm);
+
+        alarms = (ArrayList<Alarm>) dbHandler.getAlarms();
+        singletonAlarm.setAlarms(alarms);
+
+        if (alarms != null)
+        {
+            for (Alarm a : alarms)
+            {
+                ac.createAlarmCalendar(a);
+                ac.validateAlarmTime(a);
+
+                //check that alarm adj doesn't exceed the alarm time
+                if (ac.validateAlarmAdj(a))
+                {
+                    if (ac.setAlarm(a))
+                    {
+                        ac.createAlarm(getActivity(), a);
+                    }
+                    else
+                    {
+                        ac.createTimedTask(getContext(), a);
+                    }
+                }
+                else
+                {
+                    String error = getResources().getString(R.string
+                            .adjustment_error);
+                    dbHandler.deleteAlarm(a);
+                    Toast.makeText(getContext(), error, Toast.LENGTH_SHORT)
+                            .show();
+                    alarmsOk = false;
+                }
+            }
+            if (alarmsOk) goToListView();
+        }
+    }
+
+    /**
+     * this method is used to update existing alarms after being modified in the
+     * AlarmEditFragment
+     * @param ac
+     */
+
+    public void saveExistingAlarm(AlarmController ac)
+    {
+        clickedAlarm.setHour(mTimePicker.getCurrentHour());
+        clickedAlarm.setMinute(mTimePicker.getCurrentMinute());
+        clickedAlarm.setAdjustment(adjPosition);
+        clickedAlarm.setRain(rainPosition);
+
+        ac.createAlarmCalendar(clickedAlarm);
+        ac.validateAlarmTime(clickedAlarm);
+
+        //check that alarm adj doesn't exceed the alarm time
+        if (ac.validateAlarmAdj(clickedAlarm))
+        {
+            if (ac.setAlarm(clickedAlarm))
+            {
+                ac.createAlarm(getActivity(), clickedAlarm);
+            }
+            else
+            {
+                ac.createTimedTask(getContext(), clickedAlarm);
+            }
+            DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+            dbHandler.updateAlarm(clickedAlarm);
+            goToListView();
+        }
+        else
+        {
+            String error = getResources().getString(R.string
+                    .adjustment_error);
+            Toast.makeText(getContext(), error, Toast.LENGTH_SHORT)
+                    .show();
         }
     }
 }
