@@ -249,6 +249,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                     }
                     else
                     {
+                        ac.adjustAlarmCalendar(a);
                         ac.createTimedTask(getContext(), a);
                         Log.d(TAG, "saveNewAlarm: timedtask");
                     }

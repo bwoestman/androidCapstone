@@ -51,12 +51,18 @@ public class AlarmService extends Service implements AppInfo
         long id;
         SingletonAlarm singletonAlarm;
         Alarm alarm;
+        DBHandler db;
+        AlarmController ac;
 
         id = (long) startId;
         singletonAlarm = SingletonAlarm.getInstance();
 
-        DBHandler db = new DBHandler(getApplicationContext(), null, null, 1);
+        db = new DBHandler(getApplicationContext(), null, null, 1);
         alarm = db.getAlarm(id);
+
+        ac = new AlarmController();
+
+        ac.createAlarmCalendar(alarm);
 
         singletonAlarm.setServiceAlarm(alarm);
 

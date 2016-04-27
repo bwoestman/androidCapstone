@@ -201,7 +201,7 @@ public class AlarmController implements AppInfo
         decideTime = adjustedCalTimeMs - currTime;
 
         //todo change this back to 600000
-        return decideTime < 600000;
+        return decideTime < 0;
     }
 
     /**
@@ -226,7 +226,7 @@ public class AlarmController implements AppInfo
         return rain <= currentPrecip;
     }
 
-    public void resetForPrecip(Alarm alarm)
+    public void adjustAlarmForPrecip(Alarm alarm)
     {
         Calendar cal;
         int adj;
@@ -235,5 +235,16 @@ public class AlarmController implements AppInfo
         adj = alarm.getAdjustment();
 
         cal.add(Calendar.MINUTE, adj);
+    }
+
+    public void adjustAlarmCalendar(Alarm alarm)
+    {
+        int adj;
+        Calendar calendar;
+
+        adj = alarm.getAdjustment();
+        calendar = alarm.getCalendar();
+
+        calendar.add(Calendar.MINUTE, -adj);
     }
 }
