@@ -46,6 +46,20 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (singletonAlarm.getServiceAlarm() != null)
+        {
+            Alarm serviceAlarm;
+            AlarmController ac;
+
+            serviceAlarm = singletonAlarm.getServiceAlarm();
+            ac = new AlarmController();
+
+            if (ac.exceedsPrecipThreshold(serviceAlarm))
+            {
+                ac.createAlarm(this, serviceAlarm);
+            }
+        }
+
         if (findViewById(R.id.fragment_container) != null)
         {
             if (savedInstanceState == null)

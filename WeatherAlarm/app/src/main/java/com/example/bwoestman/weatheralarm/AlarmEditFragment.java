@@ -245,10 +245,12 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                     if (ac.setAlarm(a))
                     {
                         ac.createAlarm(getActivity(), a);
+                        Log.d(TAG, "saveNewAlarm: alarm");
                     }
                     else
                     {
                         ac.createTimedTask(getContext(), a);
+                        Log.d(TAG, "saveNewAlarm: timedtask");
                     }
                 }
                 else

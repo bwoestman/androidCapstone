@@ -42,9 +42,21 @@ public class AlarmController implements AppInfo
     {
         int hour;
         int min;
+        int merid;
+        Calendar calendar;
 
-        hour = alarm.getHour();
-        min = alarm.getMinute();
+        calendar = alarm.getCalendar();
+
+        hour = calendar.get(Calendar.HOUR);
+        min = calendar.get(Calendar.MINUTE);
+        merid = calendar.get(Calendar.AM_PM);
+
+        if (merid == 1)
+        {
+            hour = hour + 12;
+        }
+
+        Log.d(TAG, "createAlarm: caltime" + hour + ":" + min);
 
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
 
@@ -52,8 +64,6 @@ public class AlarmController implements AppInfo
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, min);
         alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
         activity.startActivity(alarmIntent);
-
-        Log.d(TAG, "createAlarm: alarmSet" + hour + ":" + min);
     }
 
     /**
@@ -191,7 +201,7 @@ public class AlarmController implements AppInfo
         decideTime = adjustedCalTimeMs - currTime;
 
         //todo change this back to 600000
-        return decideTime < 1;
+        return decideTime < 600000;
     }
 
     /**
@@ -201,7 +211,7 @@ public class AlarmController implements AppInfo
      * @return
      */
 
-    public boolean checkPrecipThreshold(Alarm alarm)
+    public boolean exceedsPrecipThreshold(Alarm alarm)
     {
         AlarmWeather aw = new AlarmWeather();
         SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
@@ -213,6 +223,17 @@ public class AlarmController implements AppInfo
         aw.getCurrentWeatherForecast();
         currentPrecip = singletonAlarm.getCurrPrecip();
 
-        return rain < currentPrecip;
+        return rain <= currentPrecip;
+    }
+
+    public void resetForPrecip(Alarm alarm)
+    {
+        Calendar cal;
+        int adj;
+
+        cal = alarm.getCalendar();
+        adj = alarm.getAdjustment();
+
+        cal.add(Calendar.MINUTE, adj);
     }
 }

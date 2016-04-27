@@ -91,7 +91,6 @@ public class AlarmListFragment extends Fragment implements AppInfo
             mAlarm = alarm;
         }
 
-        //todo ask how to put both onclick events in this
         @Override
         public void onClick(View v)
         {

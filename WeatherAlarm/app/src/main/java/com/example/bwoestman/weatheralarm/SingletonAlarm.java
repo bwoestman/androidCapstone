@@ -16,6 +16,7 @@ public class SingletonAlarm
     private static SingletonAlarm ourInstance = new SingletonAlarm();
     private ArrayList<Alarm> alarms;
     private Alarm clickedAlarm;
+    private Alarm serviceAlarm;
     private Integer clickedAlarmPosition = null;
     private int position;
     private double currPrecip;
@@ -163,5 +164,25 @@ public class SingletonAlarm
     public void setCurrPrecip(double currPrecip)
     {
         this.currPrecip = currPrecip;
+    }
+
+    /**
+     * Gets service alarm.
+     *
+     * @return the service alarm
+     */
+    public Alarm getServiceAlarm()
+    {
+        return serviceAlarm;
+    }
+
+    /**
+     * Sets service alarm.
+     *
+     * @param serviceAlarm the service alarm
+     */
+    public void setServiceAlarm(Alarm serviceAlarm)
+    {
+        this.serviceAlarm = serviceAlarm;
     }
 }

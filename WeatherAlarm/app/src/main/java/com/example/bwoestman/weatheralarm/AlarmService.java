@@ -1,14 +1,10 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
  * Created by Brian Woestman on 4/12/16.
@@ -52,19 +48,21 @@ public class AlarmService extends Service implements AppInfo
     {
         super.onStart(intent, startId);
 
-        long id = (long) startId;
-        SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
+        long id;
+        SingletonAlarm singletonAlarm;
         Alarm alarm;
-        AlarmController ac = new AlarmController();
+
+        id = (long) startId;
+        singletonAlarm = SingletonAlarm.getInstance();
 
         DBHandler db = new DBHandler(getApplicationContext(), null, null, 1);
         alarm = db.getAlarm(id);
 
+        singletonAlarm.setServiceAlarm(alarm);
 
-        if (ac.checkPrecipThreshold(alarm))
-        {
-            
-        }
+        Intent dialogIntent = new Intent(this, MainActivity.class);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(dialogIntent);
     }
 
     @Override
