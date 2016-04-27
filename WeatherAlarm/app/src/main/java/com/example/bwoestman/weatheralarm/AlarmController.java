@@ -226,17 +226,6 @@ public class AlarmController implements AppInfo
         return rain <= currentPrecip;
     }
 
-    public void adjustAlarmForPrecip(Alarm alarm)
-    {
-        Calendar cal;
-        int adj;
-
-        cal = alarm.getCalendar();
-        adj = alarm.getAdjustment();
-
-        cal.add(Calendar.MINUTE, adj);
-    }
-
     public void adjustAlarmCalendar(Alarm alarm)
     {
         int adj;
