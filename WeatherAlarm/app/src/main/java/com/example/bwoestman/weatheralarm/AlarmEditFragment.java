@@ -225,7 +225,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         alarm.setAdjustment(adjPosition);
         alarm.setRain(rainPosition);
 
-        //todo redo this part -> this shouldn't happen at every save
+        //todo remove this part -> this shouldn't happen at every save
         DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
         dbHandler.addAlarm(alarm);
 
@@ -249,14 +249,12 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                             ac.createAlarm(getActivity(), a);
                             a.setEnabled(1);
                             dbHandler.updateAlarm(a);
-                            Log.d(TAG, "saveNewAlarm: alarm " + a.getEnabled());
                         }
                     }
                     else
                     {
                         ac.adjustAlarmCalendar(a);
                         ac.createTimedTask(getContext(), a);
-                        Log.d(TAG, "saveNewAlarm: timedtask");
                     }
                 }
                 else

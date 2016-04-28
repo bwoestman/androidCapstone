@@ -116,6 +116,7 @@ public class AlarmController implements AppInfo
                 .ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+        Log.d(TAG, "createTimedTask: set");
     }
 
     /**
@@ -200,7 +201,6 @@ public class AlarmController implements AppInfo
 
         decideTime = adjustedCalTimeMs - currTime;
 
-        //todo change this back to 600000
         return decideTime < 600000;
     }
 
