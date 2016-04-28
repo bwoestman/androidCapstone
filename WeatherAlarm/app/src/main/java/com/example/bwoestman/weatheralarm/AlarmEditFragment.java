@@ -244,8 +244,13 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                 {
                     if (ac.setAlarm(a))
                     {
-                        ac.createAlarm(getActivity(), a);
-                        Log.d(TAG, "saveNewAlarm: alarm");
+                        if (a.getEnabled() == 0)
+                        {
+                            ac.createAlarm(getActivity(), a);
+                            a.setEnabled(1);
+                            dbHandler.updateAlarm(a);
+                            Log.d(TAG, "saveNewAlarm: alarm " + a.getEnabled());
+                        }
                     }
                     else
                     {

@@ -25,7 +25,7 @@ public class Alarm
     private Calendar calendar;
     private Integer rain;
     private Integer adjustment;
-    private Integer enabled = 1;
+    private Integer enabled = 0;
     private Intent alarmIntent;
 
     /**
