@@ -5,6 +5,11 @@ package com.example.bwoestman.weatheralarm;
  * Android Programming
  * We 5:30p - 9:20p
  */
+
+/**
+ * this class stores constants used by the application
+ */
+
 public interface AppInfo
 {
     public static final String TAG = "*****";

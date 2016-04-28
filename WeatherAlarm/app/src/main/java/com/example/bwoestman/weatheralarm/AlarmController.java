@@ -21,23 +21,42 @@ import java.util.Calendar;
  * Android Programming
  * We 5:30p - 9:20p
  */
+
+/**
+ * this class acts as the controller for all alarm activities including: setting
+ * intents, validating alarm times and calculating adjustments and precipitation
+ */
+
 public class AlarmController implements AppInfo
 {
     private PendingIntent pendingIntent;
 
     /**
-     * Create alarm.
-     *
-     * @param activity the activity
+     * this method is used to set an AlarmClock to the time specified by the Alarm
+     * parameter
+     * @param activity
+     * @param alarm
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void createAlarm(Activity activity, Alarm alarm)
     {
         int hour;
         int min;
+        int merid;
+        Calendar calendar;
 
-        hour = alarm.getHour();
-        min = alarm.getMinute();
+        calendar = alarm.getCalendar();
+
+        hour = calendar.get(Calendar.HOUR);
+        min = calendar.get(Calendar.MINUTE);
+        merid = calendar.get(Calendar.AM_PM);
+
+        if (merid == 1)
+        {
+            hour = hour + 12;
+        }
+
+        Log.d(TAG, "createAlarm: caltime" + hour + ":" + min);
 
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
 
@@ -45,9 +64,12 @@ public class AlarmController implements AppInfo
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, min);
         alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
         activity.startActivity(alarmIntent);
-
-        Log.d(TAG, "createAlarm: alarmSet" + hour + ":" + min);
     }
+
+    /**
+     * this method saves a calendar to the Alarm parameter for the specified alarm time
+     * @param alarm
+     */
 
     public void createAlarmCalendar(Alarm alarm)
     {
@@ -74,13 +96,17 @@ public class AlarmController implements AppInfo
         alarm.setCalendar(calendar);
     }
 
+    /**
+     * this method creates a timed task that will wake the application to set the
+     * alarms at a future time
+     * @param context
+     * @param alarm
+     */
+
     public void createTimedTask(Context context, Alarm alarm)
     {
         Calendar cal = alarm.getCalendar();
         int _id = alarm.get_id().intValue();
-
-        //todo remove this string
-        String intentAlert = _id + " intent was saved";
 
         Intent intent = new Intent(context, AlarmService.class);
 
@@ -90,13 +116,12 @@ public class AlarmController implements AppInfo
                 .ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-
-        Log.d(TAG, "createTimedTask: " + intentAlert);
+        Log.d(TAG, "createTimedTask: set");
     }
 
     /**
      * this function checks that the alarm is set for the future and adds 24 hours
-     * if the time has already passed
+     * if the time has already expired
      *
      * @param alarm
      */
@@ -117,12 +142,20 @@ public class AlarmController implements AppInfo
         dif = calTimeMs - System.currentTimeMillis();
 
         //check if alarm is set for the future and push up 24 hours if it has
-        //passed already
+        //already expired
         if (dif < 0)
         {
             alarmCal.add(Calendar.HOUR, 24);
         }
     }
+
+    /**
+     * this method is used to check if the alarm adjustment will result in a valid
+     * alarm time by checking the difference between the alarm time and the minute
+     * value of the adjustment
+     * @param alarm
+     * @return
+     */
 
     public boolean validateAlarmAdj(Alarm alarm)
     {
@@ -145,6 +178,13 @@ public class AlarmController implements AppInfo
         return (adjDiff * 1000 * 60) > 0;
     }
 
+    /**
+     * this method checks the alarm time and the adjustment to determine if the alarm
+     * should be set immediately
+     * @param alarm
+     * @return
+     */
+
     public boolean setAlarm(Alarm alarm)
     {
         long adjMs;
@@ -161,11 +201,17 @@ public class AlarmController implements AppInfo
 
         decideTime = adjustedCalTimeMs - currTime;
 
-        //todo change this back to 600000
-        return decideTime < 1;
+        return decideTime < 600000;
     }
 
-    public boolean checkPrecipThreshold(Alarm alarm)
+    /**
+     * this method determines if the current chance of rain exceeds the Alarm property
+     * for chance of rain
+     * @param alarm
+     * @return
+     */
+
+    public boolean exceedsPrecipThreshold(Alarm alarm)
     {
         AlarmWeather aw = new AlarmWeather();
         SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
@@ -177,6 +223,17 @@ public class AlarmController implements AppInfo
         aw.getCurrentWeatherForecast();
         currentPrecip = singletonAlarm.getCurrPrecip();
 
-        return rain < currentPrecip;
+        return rain <= currentPrecip;
+    }
+
+    public void adjustAlarmCalendar(Alarm alarm)
+    {
+        int adj;
+        Calendar calendar;
+
+        adj = alarm.getAdjustment();
+        calendar = alarm.getCalendar();
+
+        calendar.add(Calendar.MINUTE, -adj);
     }
 }

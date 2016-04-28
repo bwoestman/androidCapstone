@@ -23,13 +23,16 @@ import java.util.List;
  * Android Programming
  * We 5:30p - 9:20p
  */
+
+/**
+ * this class is a fragment where the alarms are displayed in a list using the recycler
+ * view
+ */
+
 public class AlarmListFragment extends Fragment implements AppInfo
 {
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
-
     private RecyclerView mAlarmRecyclerView;
-    private List<Alarm> mAlarms;
-    private AlarmAdapter mAdapter;
 
     @Nullable
     @Override
@@ -43,7 +46,6 @@ public class AlarmListFragment extends Fragment implements AppInfo
         mAlarmRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         updateUI();
-
         return view;
     }
 
@@ -89,7 +91,6 @@ public class AlarmListFragment extends Fragment implements AppInfo
             mAlarm = alarm;
         }
 
-        //todo ask how to put both onclick events in this
         @Override
         public void onClick(View v)
         {
@@ -166,11 +167,15 @@ public class AlarmListFragment extends Fragment implements AppInfo
         }
     }
 
+    /**
+     * this method updates and outputs the alarm list
+     */
+
     private void updateUI()
     {
         DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
-        mAlarms = dbHandler.getAlarms();
-        mAdapter = new AlarmAdapter(mAlarms);
+        List<Alarm> mAlarms = dbHandler.getAlarms();
+        AlarmAdapter mAdapter = new AlarmAdapter(mAlarms);
 
         singletonAlarm.setAlarms((ArrayList<Alarm>) mAlarms);
 
@@ -199,6 +204,10 @@ public class AlarmListFragment extends Fragment implements AppInfo
         menu.clear();
         inflater.inflate(R.menu.main_menu, menu);
     }
+
+    /**
+     * this method switches back to the AlarmEditFragment
+     */
 
     public void goToEditFragment()
     {

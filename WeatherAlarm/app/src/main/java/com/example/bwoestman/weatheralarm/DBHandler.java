@@ -15,6 +15,11 @@ import java.util.List;
  * Android Programming
  * We 5:30p - 9:20p
  */
+
+/**
+ * this class is used to make all the calls to the sqlite database
+ */
+
 public class DBHandler extends SQLiteOpenHelper implements AppInfo
 {
     private static final int DATABASE_VERSION = 1;
@@ -27,6 +32,14 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
     public static final String COLUMN_RAIN = "rain";
     public static final String COLUMN_ADJUSTMENT = "adjustment";
     public static final String COLUMN_ENABLED = "enabled";
+
+    /**
+     * this is the constructor for the database
+     * @param context
+     * @param name
+     * @param factory
+     * @param version
+     */
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory,
                      int version)
@@ -78,6 +91,12 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     }
 
+    /**
+     * this method enters an alarm into the database and returns its id
+     * @param alarm
+     * @return
+     */
+
     public Long addAlarm(Alarm alarm)
     {
         ContentValues values = new ContentValues();
@@ -95,6 +114,11 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
         return id;
     }
+
+    /**
+     * this method returns a list of all the alarms in the database
+     * @return
+     */
 
     public List<Alarm> getAlarms()
     {
@@ -126,6 +150,12 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         return alarms;
     }
 
+    /**
+     * this method returns one alarm from the database for the specified id
+     * @param id
+     * @return
+     */
+
     public Alarm getAlarm(Long id)
     {
         Alarm alarm;
@@ -156,6 +186,11 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         return null;
     }
 
+    /**
+     * this method updates all the fields for a specified alarm
+     * @param alarm
+     */
+
     public void updateAlarm(Alarm alarm)
     {
         SQLiteDatabase db = getWritableDatabase();
@@ -173,6 +208,11 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         db.close();
     }
 
+    /**
+     * this method removes a specified alarm from the database
+     * @param alarm
+     */
+
     public void deleteAlarm(Alarm alarm)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -183,15 +223,9 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         db.close();
     }
 
-    public void dropTable()
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "DROP TABLE IF EXISTS " + TABLE_ALARMS;
-
-        db.execSQL(sql);
-
-        db.close();
-    }
+    /**
+     * this method removes all the alarms from the database
+     */
 
     public void deleteAllAlarms()
     {

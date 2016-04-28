@@ -1,7 +1,9 @@
 package com.example.bwoestman.weatheralarm;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.provider.AlarmClock;
 
 import java.util.Calendar;
@@ -11,6 +13,10 @@ import java.util.Calendar;
  * Android Programming
  * We 5:30p - 9:20p
  */
+
+/**
+ * this class is a pojo that is used to hold all the alarm data
+ */
 public class Alarm
 {
     private Long _id;
@@ -19,7 +25,7 @@ public class Alarm
     private Calendar calendar;
     private Integer rain;
     private Integer adjustment;
-    private Integer enabled = 1;
+    private Integer enabled = 0;
     private Intent alarmIntent;
 
     /**
@@ -216,6 +222,7 @@ public class Alarm
      *
      * @param activity the activity
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void createAlarm(Activity activity)
     {
         alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
@@ -225,6 +232,10 @@ public class Alarm
         activity.startActivity(alarmIntent);
     }
 
+    /**
+     * this method outputs the alarm properties as a string
+     * @return
+     */
     public String toString()
     {
         return "_id:" + _id + "hour: " + hour + ", minute: " + minute + ", adjustment: " +

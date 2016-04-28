@@ -1,20 +1,23 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
  * Created by Brian Woestman on 4/12/16.
  * Android Programming
  * We 5:30p - 9:20p
  */
+
+/**
+ * this class is called when the app wakes up after being called by the alarm manager -
+ * its purpose, on start, is to check the alarm that set the intent that called it and
+ * then determine if the alarm needs to be set based on the precipitation.
+ */
+
 public class AlarmService extends Service implements AppInfo
 {
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
@@ -45,16 +48,27 @@ public class AlarmService extends Service implements AppInfo
     {
         super.onStart(intent, startId);
 
-        Log.d(TAG, "onStart: service started " + startId);
-
-        long id = (long) startId;
-        SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
+        long id;
+        SingletonAlarm singletonAlarm;
         Alarm alarm;
-        AlarmController ac = new AlarmController();
+        DBHandler db;
+        AlarmController ac;
 
-        DBHandler db = new DBHandler(getApplicationContext(), null, null, 1);
+        id = (long) startId;
+        singletonAlarm = SingletonAlarm.getInstance();
+
+        db = new DBHandler(getApplicationContext(), null, null, 1);
         alarm = db.getAlarm(id);
-        ac.checkPrecipThreshold(alarm);
+
+        ac = new AlarmController();
+
+        ac.createAlarmCalendar(alarm);
+
+        singletonAlarm.setServiceAlarm(alarm);
+
+        Intent dialogIntent = new Intent(this, MainActivity.class);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(dialogIntent);
     }
 
     @Override

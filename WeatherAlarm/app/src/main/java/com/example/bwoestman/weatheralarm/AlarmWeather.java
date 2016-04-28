@@ -18,12 +18,8 @@ import retrofit.client.Response;
 public class AlarmWeather implements AppInfo
 {
     /**
-     * The Current precip.
-     */
-    Double currentPrecip;
-
-    /**
-     * Gets current weather forcast.
+     * this method sends a request to DarkSky and returns the current weather forecast
+     * and saves chance of precipitation to the AlarmSingleton
      */
     public void getCurrentWeatherForecast()
     {
@@ -37,12 +33,17 @@ public class AlarmWeather implements AppInfo
         request.setUnits(Request.Units.US);
         request.setLanguage(Request.Language.ENGLISH);
 
+        /**
+         * anonymous class that gets the weather from DarkSky api and saves the
+         * precipitation data in the singleton
+         */
+
         weather.getWeather(request, new Callback<WeatherResponse>()
         {
             @Override
             public void success(WeatherResponse weatherResponse, Response response)
             {
-                currentPrecip = Double.valueOf(weatherResponse.getCurrently()
+                double currentPrecip = Double.valueOf(weatherResponse.getCurrently()
                         .getPrecipProbability());
                 Log.d(TAG, "success: precip" + currentPrecip);
 
@@ -56,25 +57,5 @@ public class AlarmWeather implements AppInfo
                 Log.d(TAG, "failure: Oh, no!" + error);
             }
         });
-    }
-
-    /**
-     * Gets current precip.
-     *
-     * @return the current precip
-     */
-    public Double getCurrentPrecip()
-    {
-        return currentPrecip;
-    }
-
-    /**
-     * Sets current precip.
-     *
-     * @param currentPrecip the current precip
-     */
-    public void setCurrentPrecip(Double currentPrecip)
-    {
-        this.currentPrecip = currentPrecip;
     }
 }
