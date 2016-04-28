@@ -201,7 +201,7 @@ public class AlarmController implements AppInfo
         decideTime = adjustedCalTimeMs - currTime;
 
         //todo change this back to 600000
-        return decideTime < 0;
+        return decideTime < 600000;
     }
 
     /**
