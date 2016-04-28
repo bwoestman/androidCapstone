@@ -173,11 +173,22 @@ public class AlarmListFragment extends Fragment implements AppInfo
 
     private void updateUI()
     {
-        DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
-        List<Alarm> mAlarms = dbHandler.getAlarms();
-        AlarmAdapter mAdapter = new AlarmAdapter(mAlarms);
+        List<Alarm> mAlarms;
+        DBHandler dbHandler;
+        AlarmAdapter mAdapter;
 
-        singletonAlarm.setAlarms((ArrayList<Alarm>) mAlarms);
+        if (singletonAlarm.getAlarms() == null)
+        {
+            dbHandler = new DBHandler(getContext(), null, null, 1);
+            mAlarms = dbHandler.getAlarms();
+            singletonAlarm.setAlarms((ArrayList<Alarm>) mAlarms);
+        }
+        else
+        {
+            mAlarms = singletonAlarm.getAlarms();
+        }
+
+        mAdapter = new AlarmAdapter(mAlarms);
 
         mAlarmRecyclerView.setAdapter(mAdapter);
     }
