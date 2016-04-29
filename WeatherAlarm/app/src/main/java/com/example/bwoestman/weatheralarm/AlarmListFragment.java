@@ -52,8 +52,8 @@ public class AlarmListFragment extends Fragment implements AppInfo
     private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private TextView mTimeTv;
+        private TextView mRainTv;
         private Switch mEnableSw;
-
         private Alarm mAlarm;
 
         public AlarmHolder(View itemView)
@@ -122,12 +122,13 @@ public class AlarmListFragment extends Fragment implements AppInfo
         @Override
         public void onBindViewHolder(AlarmHolder holder, int position)
         {
-
-            Alarm alarm = mAlarms.get(position);
-            holder.bindAlarm(alarm);
-
+            Alarm alarm;
             String minute;
             String time;
+
+            alarm = mAlarms.get(position);
+
+            holder.bindAlarm(alarm);
 
             if (alarm.getMinute() < 10)
             {

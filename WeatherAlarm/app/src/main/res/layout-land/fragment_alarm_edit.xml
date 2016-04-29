@@ -6,7 +6,7 @@
               android:id="@+id/fragment_alarm_edit">
 
     <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_weight="2">
         <LinearLayout
