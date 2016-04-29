@@ -33,6 +33,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
 {
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
     private RecyclerView mAlarmRecyclerView;
+    private ArrayList<Alarm> alarms;
 
     @Nullable
     @Override
@@ -47,6 +48,13 @@ public class AlarmListFragment extends Fragment implements AppInfo
 
         updateUI();
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+
     }
 
     private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -190,7 +198,6 @@ public class AlarmListFragment extends Fragment implements AppInfo
         }
 
         mAdapter = new AlarmAdapter(mAlarms);
-
         mAlarmRecyclerView.setAdapter(mAdapter);
     }
 

@@ -35,6 +35,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     private Button mBtnSave;
     private TextView mTvAdjustSbPostion;
     private TextView mTvRainSbPosition;
+    private ArrayList<Alarm> alarms;
 
     private Integer adjPosition = 0;
     private Integer rainPosition = 0;
@@ -202,6 +203,8 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                 }
                 break;
             case R.id.btnCancel:
+                DBHandler db = new DBHandler(getContext(), null, null, 1);
+                singletonAlarm.setAlarms((ArrayList<Alarm>) db.getAlarms());
                 goToListView();
                 break;
             default:
@@ -217,7 +220,6 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     public void saveNewAlarm(AlarmController ac)
     {
         boolean alarmsOk = true;
-        ArrayList<Alarm> alarms;
 
         alarm = new Alarm();
         alarm.setHour(mTimePicker.getCurrentHour());
@@ -300,6 +302,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             }
             DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
             dbHandler.updateAlarm(clickedAlarm);
+            singletonAlarm.setAlarms((ArrayList<Alarm>) dbHandler.getAlarms());
             goToListView();
         }
         else
