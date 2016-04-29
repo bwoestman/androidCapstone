@@ -1,6 +1,7 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.annotation.TargetApi;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,10 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.*;
-import android.widget.CheckBox;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +33,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
     private RecyclerView mAlarmRecyclerView;
     private ArrayList<Alarm> alarms;
+    private AlarmEditFragment alarmEditFragment;
 
     @Nullable
     @Override
@@ -50,17 +50,9 @@ public class AlarmListFragment extends Fragment implements AppInfo
         return view;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-
-    }
-
     private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private TextView mTimeTv;
-        private TextView mRainTv;
         private Switch mEnableSw;
         private Alarm mAlarm;
 
@@ -103,7 +95,16 @@ public class AlarmListFragment extends Fragment implements AppInfo
         public void onClick(View v)
         {
             singletonAlarm.setClickedAlarm(mAlarm);
-            goToEditFragment();
+            if (singletonAlarm.getIsSinglePane())
+            {
+                goToEditFragment();
+            }
+            else
+            {
+                alarmEditFragment = (AlarmEditFragment) getFragmentManager()
+                        .findFragmentById(R.id.fragment_alarm_edit);
+                alarmEditFragment.updateUi();
+            }
         }
     }
 

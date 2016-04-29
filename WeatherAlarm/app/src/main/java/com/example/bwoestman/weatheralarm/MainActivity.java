@@ -1,29 +1,12 @@
 package com.example.bwoestman.weatheralarm;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.location.*;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements AppInfo
 {
@@ -45,7 +28,17 @@ public class MainActivity extends AppCompatActivity implements AppInfo
 //        db.deleteAllAlarms();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE)
+        {
+            singletonAlarm.setIsSinglePane(false);
+            setContentView(R.layout.tablet_layout);
+        }
+        else
+        {
+            singletonAlarm.setIsSinglePane(true);
+            setContentView(R.layout.activity_main);
+        }
 
         if (singletonAlarm.getServiceAlarm() != null)
         {

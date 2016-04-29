@@ -20,6 +20,7 @@ public class SingletonAlarm
     private Integer clickedAlarmPosition = null;
     private int position;
     private double currPrecip;
+    private boolean isSinglePane;
 
     /**
      * Gets instance.
@@ -184,5 +185,25 @@ public class SingletonAlarm
     public void setServiceAlarm(Alarm serviceAlarm)
     {
         this.serviceAlarm = serviceAlarm;
+    }
+
+    /**
+     * Gets screen size.
+     *
+     * @return the screen size
+     */
+    public boolean getIsSinglePane()
+    {
+        return isSinglePane;
+    }
+
+    /**
+     * Sets screen size.
+     *
+     * @param isSinglePane the screen size
+     */
+    public void setIsSinglePane(boolean isSinglePane)
+    {
+        this.isSinglePane = isSinglePane;
     }
 }

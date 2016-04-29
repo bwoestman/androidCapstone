@@ -1,11 +1,11 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.annotation.TargetApi;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +36,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     private TextView mTvAdjustSbPostion;
     private TextView mTvRainSbPosition;
     private ArrayList<Alarm> alarms;
+    private AlarmListFragment alarmListFragmentf;
 
     private Integer adjPosition = 0;
     private Integer rainPosition = 0;
@@ -66,9 +67,6 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        String rainText;
-        String adjText;
-
         View view = inflater.inflate(R.layout.fragment_alarm_edit, container, false);
 
         mTimePicker = (TimePicker) view.findViewById(R.id.timePicker);
@@ -86,37 +84,39 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
 
         mTimePicker.setIs24HourView(true);
 
-        if (SingletonAlarm.getInstance().getClickedAlarmPosition() == null)
-        {
-            singletonAlarm = SingletonAlarm.getInstance();
-            singletonAlarm.setAlarms(new ArrayList<Alarm>());
-        }
-        else
-        {
-            singletonAlarm = SingletonAlarm.getInstance();
-        }
+        updateUi();
 
-        if (singletonAlarm.getClickedAlarm() != null)
-        {
-            clickedAlarm = singletonAlarm.getClickedAlarm();
-
-            rainText = ": " + clickedAlarm.getRain() + getActivity().getString(R.string
-                    .percent_symbol);
-
-            adjText = ": " + clickedAlarm.getAdjustment() + " minutes";
-
-            adjPosition = clickedAlarm.getAdjustment();
-            rainPosition = clickedAlarm.getRain();
-
-            mTimePicker.setHour(clickedAlarm.getHour());
-            mTimePicker.setMinute(clickedAlarm.getMinute());
-
-            mSbRain.setProgress(clickedAlarm.getRain());
-            mTvRainSbPosition.setText(rainText);
-
-            mSbAdjustment.setProgress(clickedAlarm.getAdjustment());
-            mTvAdjustSbPostion.setText(adjText);
-        }
+//        if (SingletonAlarm.getInstance().getClickedAlarmPosition() == null)
+//        {
+//            singletonAlarm = SingletonAlarm.getInstance();
+//            singletonAlarm.setAlarms(new ArrayList<Alarm>());
+//        }
+//        else
+//        {
+//            singletonAlarm = SingletonAlarm.getInstance();
+//        }
+//
+//        if (singletonAlarm.getClickedAlarm() != null)
+//        {
+//            clickedAlarm = singletonAlarm.getClickedAlarm();
+//
+//            rainText = ": " + clickedAlarm.getRain() + getActivity().getString(R.string
+//                    .percent_symbol);
+//
+//            adjText = ": " + clickedAlarm.getAdjustment() + " minutes";
+//
+//            adjPosition = clickedAlarm.getAdjustment();
+//            rainPosition = clickedAlarm.getRain();
+//
+//            mTimePicker.setHour(clickedAlarm.getHour());
+//            mTimePicker.setMinute(clickedAlarm.getMinute());
+//
+//            mSbRain.setProgress(clickedAlarm.getRain());
+//            mTvRainSbPosition.setText(rainText);
+//
+//            mSbAdjustment.setProgress(clickedAlarm.getAdjustment());
+//            mTvAdjustSbPostion.setText(adjText);
+//        }
 
         //seekbar anonymous class for Adjustment setting
         mSbAdjustment.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
@@ -303,7 +303,10 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
             dbHandler.updateAlarm(clickedAlarm);
             singletonAlarm.setAlarms((ArrayList<Alarm>) dbHandler.getAlarms());
-            goToListView();
+            if (singletonAlarm.getIsSinglePane())
+            {
+                goToListView();
+            }
         }
         else
         {
@@ -311,6 +314,45 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                     .adjustment_error);
             Toast.makeText(getContext(), error, Toast.LENGTH_SHORT)
                     .show();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void updateUi()
+    {
+        String rainText;
+        String adjText;
+
+        if (SingletonAlarm.getInstance().getClickedAlarmPosition() == null)
+        {
+            singletonAlarm = SingletonAlarm.getInstance();
+            singletonAlarm.setAlarms(new ArrayList<Alarm>());
+        }
+        else
+        {
+            singletonAlarm = SingletonAlarm.getInstance();
+        }
+
+        if (singletonAlarm.getClickedAlarm() != null)
+        {
+            clickedAlarm = singletonAlarm.getClickedAlarm();
+
+            rainText = ": " + clickedAlarm.getRain() + getActivity().getString(R.string
+                    .percent_symbol);
+
+            adjText = ": " + clickedAlarm.getAdjustment() + " minutes";
+
+            adjPosition = clickedAlarm.getAdjustment();
+            rainPosition = clickedAlarm.getRain();
+
+            mTimePicker.setHour(clickedAlarm.getHour());
+            mTimePicker.setMinute(clickedAlarm.getMinute());
+
+            mSbRain.setProgress(clickedAlarm.getRain());
+            mTvRainSbPosition.setText(rainText);
+
+            mSbAdjustment.setProgress(clickedAlarm.getAdjustment());
+            mTvAdjustSbPostion.setText(adjText);
         }
     }
 }
