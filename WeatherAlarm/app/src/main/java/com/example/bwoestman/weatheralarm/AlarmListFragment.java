@@ -181,7 +181,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
      * this method updates and outputs the alarm list
      */
 
-    private void updateUI()
+    public void updateUI()
     {
         List<Alarm> mAlarms;
         DBHandler dbHandler;

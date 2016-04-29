@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Brian Woestman on 2/26/16.
@@ -36,7 +37,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     private TextView mTvAdjustSbPostion;
     private TextView mTvRainSbPosition;
     private ArrayList<Alarm> alarms;
-    private AlarmListFragment alarmListFragmentf;
+    private AlarmListFragment alarmListFragment;
 
     private Integer adjPosition = 0;
     private Integer rainPosition = 0;
@@ -67,7 +68,22 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_alarm_edit, container, false);
+        View view;
+        singletonAlarm = SingletonAlarm.getInstance();
+
+        if (singletonAlarm.getIsSinglePane())
+        {
+            view = inflater.inflate(R.layout.fragment_alarm_edit, container, false);
+
+            mBtnCancel = (Button) view.findViewById(R.id.btnCancel);
+            mBtnCancel.setOnClickListener(this);
+        }
+        else
+        {
+            view = inflater.inflate(R.layout.tablet_fragment_alarm_edit, container, false);
+            alarmListFragment = (AlarmListFragment) getFragmentManager()
+                    .findFragmentById(R.id.alarm_list_fragment);
+        }
 
         mTimePicker = (TimePicker) view.findViewById(R.id.timePicker);
 
@@ -77,46 +93,12 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         mTvAdjustSbPostion = (TextView) view.findViewById(R.id.tvAdjustSbPosition);
         mTvRainSbPosition = (TextView) view.findViewById(R.id.tvRainSbPosition);
 
-        mBtnCancel = (Button) view.findViewById(R.id.btnCancel);
-        mBtnCancel.setOnClickListener(this);
         mBtnSave = (Button) view.findViewById(R.id.btnSave);
         mBtnSave.setOnClickListener(this);
 
         mTimePicker.setIs24HourView(true);
 
         updateUi();
-
-//        if (SingletonAlarm.getInstance().getClickedAlarmPosition() == null)
-//        {
-//            singletonAlarm = SingletonAlarm.getInstance();
-//            singletonAlarm.setAlarms(new ArrayList<Alarm>());
-//        }
-//        else
-//        {
-//            singletonAlarm = SingletonAlarm.getInstance();
-//        }
-//
-//        if (singletonAlarm.getClickedAlarm() != null)
-//        {
-//            clickedAlarm = singletonAlarm.getClickedAlarm();
-//
-//            rainText = ": " + clickedAlarm.getRain() + getActivity().getString(R.string
-//                    .percent_symbol);
-//
-//            adjText = ": " + clickedAlarm.getAdjustment() + " minutes";
-//
-//            adjPosition = clickedAlarm.getAdjustment();
-//            rainPosition = clickedAlarm.getRain();
-//
-//            mTimePicker.setHour(clickedAlarm.getHour());
-//            mTimePicker.setMinute(clickedAlarm.getMinute());
-//
-//            mSbRain.setProgress(clickedAlarm.getRain());
-//            mTvRainSbPosition.setText(rainText);
-//
-//            mSbAdjustment.setProgress(clickedAlarm.getAdjustment());
-//            mTvAdjustSbPostion.setText(adjText);
-//        }
 
         //seekbar anonymous class for Adjustment setting
         mSbAdjustment.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
@@ -183,6 +165,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
 
     /**
      * this method is the on click controller for the save / cancel buttons
+     *
      * @param v
      */
 
@@ -214,6 +197,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
 
     /**
      * this method saves new alarms to the database after they've been validated
+     *
      * @param ac
      */
 
@@ -269,13 +253,21 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                     alarmsOk = false;
                 }
             }
-            if (alarmsOk) goToListView();
+            if (alarmsOk && singletonAlarm.getIsSinglePane())
+            {
+                goToListView();
+            }
+            else
+            {
+                alarmListFragment.updateUI();
+            }
         }
     }
 
     /**
      * this method is used to update existing alarms after being modified in the
      * AlarmEditFragment
+     *
      * @param ac
      */
 
@@ -306,6 +298,10 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             if (singletonAlarm.getIsSinglePane())
             {
                 goToListView();
+            }
+            else
+            {
+                alarmListFragment.updateUI();
             }
         }
         else
@@ -354,5 +350,23 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             mSbAdjustment.setProgress(clickedAlarm.getAdjustment());
             mTvAdjustSbPostion.setText(adjText);
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void clearInputs()
+    {
+        clickedAlarm = null;
+
+        Calendar calendar;
+        calendar = Calendar.getInstance();
+
+        mTimePicker.setHour(calendar.get(Calendar.HOUR));
+        mTimePicker.setMinute(calendar.get(Calendar.MINUTE));
+
+        mSbAdjustment.setProgress(0);
+        mSbRain.setProgress(0);
+
+        mTvAdjustSbPostion.setText("");
+        mTvRainSbPosition.setText("");
     }
 }

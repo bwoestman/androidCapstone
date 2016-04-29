@@ -1,9 +1,11 @@
 package com.example.bwoestman.weatheralarm;
 
+import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements AppInfo
 {
     private ArrayList<Alarm> alarms;
     private PendingIntent pendingIntent;
+    private AlarmEditFragment alarmEditFragment;
     private AlarmController ac;
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
 
@@ -83,7 +86,16 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         {
             case R.id.add_alarm:
                 SingletonAlarm.getInstance().setClickedAlarm(null);
-                goToEditView();
+                if (singletonAlarm.getIsSinglePane())
+                {
+                    goToEditView();
+                }
+                else
+                {
+                    alarmEditFragment = (AlarmEditFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.fragment_alarm_edit);
+                    alarmEditFragment.clearInputs();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
