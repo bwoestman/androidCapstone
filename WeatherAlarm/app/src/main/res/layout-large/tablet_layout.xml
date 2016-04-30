@@ -8,11 +8,16 @@
               android:id="@+id/alarm_list_fragment"
               android:layout_width="0dp"
               android:layout_height="match_parent"
-              android:layout_weight="1"/>
+              android:layout_weight="1" android:layout_margin="10dp"/>
+    <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" android:background="@color/dim_foreground_disabled_material_dark"
+            android:layout_marginTop="10dp" android:layout_marginBottom="10dp"/>
+
     <fragment class="com.example.bwoestman.weatheralarm.AlarmEditFragment"
               android:id="@+id/fragment_alarm_edit"
               android:layout_width="0dp"
               android:layout_height="match_parent"
-              android:layout_weight="2"/>
+              android:layout_weight="2" android:layout_margin="10dp"/>
 
 </LinearLayout>

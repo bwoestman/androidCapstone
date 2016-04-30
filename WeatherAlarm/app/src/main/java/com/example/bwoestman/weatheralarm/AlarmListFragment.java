@@ -57,7 +57,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
     private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private TextView mTimeTv;
-        private Switch mEnableSw;
+//        private Switch mEnableSw;
         private Alarm mAlarm;
 
         public AlarmHolder(View itemView)
@@ -67,26 +67,26 @@ public class AlarmListFragment extends Fragment implements AppInfo
             itemView.setOnClickListener(this);
 
             mTimeTv = (TextView) itemView.findViewById(R.id.tv_time);
-            mEnableSw = (Switch) itemView.findViewById(R.id.sw_enable);
+//            mEnableSw = (Switch) itemView.findViewById(R.id.sw_enable);
 
-            mEnableSw.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    boolean enabled = mEnableSw.isChecked();
-                    if (enabled)
-                    {
-                        mAlarm.setEnabled(1);
-                    }
-                    else
-                    {
-                        mAlarm.setEnabled(0);
-                    }
-                    DBHandler db = new DBHandler(getContext(), null, null, 1);
-                    db.updateAlarm(mAlarm);
-                }
-            });
+//            mEnableSw.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    boolean enabled = mEnableSw.isChecked();
+//                    if (enabled)
+//                    {
+//                        mAlarm.setEnabled(1);
+//                    }
+//                    else
+//                    {
+//                        mAlarm.setEnabled(0);
+//                    }
+//                    DBHandler db = new DBHandler(getContext(), null, null, 1);
+//                    db.updateAlarm(mAlarm);
+//                }
+//            });
         }
 
         @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -156,22 +156,22 @@ public class AlarmListFragment extends Fragment implements AppInfo
 
             holder.mTimeTv.setText(time);
 
-            if (alarm.getEnabled() == 1)
-            {
-                holder.mEnableSw.setChecked(true);
-            } else
-            {
-                holder.mEnableSw.setChecked(false);
-            }
-
-            if (alarm.getEnabled() == 1)
-            {
-                holder.mEnableSw.setChecked(true);
-            }
-            else
-            {
-                holder.mEnableSw.setChecked(false);
-            }
+//            if (alarm.getEnabled() == 1)
+//            {
+//                holder.mEnableSw.setChecked(true);
+//            } else
+//            {
+//                holder.mEnableSw.setChecked(false);
+//            }
+//
+//            if (alarm.getEnabled() == 1)
+//            {
+//                holder.mEnableSw.setChecked(true);
+//            }
+//            else
+//            {
+//                holder.mEnableSw.setChecked(false);
+//            }
         }
 
         @Override
