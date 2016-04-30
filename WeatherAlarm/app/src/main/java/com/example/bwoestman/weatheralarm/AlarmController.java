@@ -235,5 +235,6 @@ public class AlarmController implements AppInfo
         calendar = alarm.getCalendar();
 
         calendar.add(Calendar.MINUTE, -adj);
+        alarm.setCalendar(calendar);
     }
 }
