@@ -27,7 +27,7 @@ import java.util.Calendar;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClickListener
 {
-    private SingletonAlarm singletonAlarm;
+    private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
     private Alarm clickedAlarm;
     private TimePicker mTimePicker;
     private SeekBar mSbAdjustment;
@@ -69,7 +69,11 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                              @Nullable Bundle savedInstanceState)
     {
         View view;
-        singletonAlarm = SingletonAlarm.getInstance();
+
+        if (singletonAlarm.getAlarms() != null)
+        {
+            alarms = singletonAlarm.getAlarms();
+        }
 
         if (singletonAlarm.getIsSinglePane())
         {
@@ -145,6 +149,13 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         });
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        singletonAlarm.setAlarms(alarms);
     }
 
     /**

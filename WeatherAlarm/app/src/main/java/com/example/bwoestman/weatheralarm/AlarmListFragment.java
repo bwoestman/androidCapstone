@@ -33,13 +33,17 @@ public class AlarmListFragment extends Fragment implements AppInfo
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
     private RecyclerView mAlarmRecyclerView;
     private ArrayList<Alarm> alarms;
-    private AlarmEditFragment alarmEditFragment;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
+        if (singletonAlarm.getAlarms() != null)
+        {
+            alarms = singletonAlarm.getAlarms();
+        }
+
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_alarm_list, container, false);
 
@@ -101,7 +105,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
             }
             else
             {
-                alarmEditFragment = (AlarmEditFragment) getFragmentManager()
+                AlarmEditFragment alarmEditFragment = (AlarmEditFragment) getFragmentManager()
                         .findFragmentById(R.id.fragment_alarm_edit);
                 alarmEditFragment.updateUi();
             }
