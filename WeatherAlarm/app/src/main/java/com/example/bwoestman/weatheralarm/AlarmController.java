@@ -29,8 +29,7 @@ import java.util.Calendar;
 
 public class AlarmController implements AppInfo
 {
-    private PendingIntent pendingIntent;
-
+    SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
     /**
      * this method is used to set an AlarmClock to the time specified by the Alarm
      * parameter
@@ -44,6 +43,8 @@ public class AlarmController implements AppInfo
         int min;
         int merid;
         Calendar calendar;
+        DBHandler dbHandler;
+        AlarmListFragment alarmListFragment;
 
         calendar = alarm.getCalendar();
 
@@ -56,14 +57,15 @@ public class AlarmController implements AppInfo
             hour = hour + 12;
         }
 
-        Log.d(TAG, "createAlarm: caltime" + hour + ":" + min);
-
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
+        dbHandler = new DBHandler(activity.getApplicationContext(), null, null, 1);
 
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, min);
         alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
         activity.startActivity(alarmIntent);
+
+        dbHandler.deleteAlarm(alarm);
     }
 
     /**
@@ -110,7 +112,7 @@ public class AlarmController implements AppInfo
 
         Intent intent = new Intent(context, AlarmService.class);
 
-        pendingIntent = PendingIntent.getService(context, _id, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getService(context, _id, intent, 0);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context
                 .ALARM_SERVICE);
@@ -214,7 +216,6 @@ public class AlarmController implements AppInfo
     public boolean exceedsPrecipThreshold(Alarm alarm)
     {
         AlarmWeather aw = new AlarmWeather();
-        SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
 
         double rain;
         double currentPrecip;

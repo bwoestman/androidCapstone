@@ -6,6 +6,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by Brian Woestman on 4/12/16.
  * Android Programming
@@ -51,6 +53,7 @@ public class AlarmService extends Service implements AppInfo
         long id;
         SingletonAlarm singletonAlarm;
         Alarm alarm;
+        ArrayList<Alarm> alarms;
         DBHandler db;
         AlarmController ac;
 
@@ -59,12 +62,16 @@ public class AlarmService extends Service implements AppInfo
 
         db = new DBHandler(getApplicationContext(), null, null, 1);
         alarm = db.getAlarm(id);
+        db.deleteAlarm(alarm);
+
+        alarms = (ArrayList<Alarm>) db.getAlarms();
 
         ac = new AlarmController();
 
         ac.createAlarmCalendar(alarm);
 
         singletonAlarm.setServiceAlarm(alarm);
+        singletonAlarm.setAlarms(alarms);
 
         Intent dialogIntent = new Intent(this, MainActivity.class);
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -13,9 +13,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements AppInfo
 {
     private ArrayList<Alarm> alarms;
-    private PendingIntent pendingIntent;
-    private AlarmEditFragment alarmEditFragment;
-    private AlarmController ac;
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
 
     /**
@@ -29,6 +26,21 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         //todo remove this
 //        DBHandler db = new DBHandler(this, null, null, 1);
 //        db.deleteAllAlarms();
+        alarms = singletonAlarm.getAlarms();
+
+        if (singletonAlarm.getServiceAlarm() != null)
+        {
+            Alarm serviceAlarm;
+
+            serviceAlarm = singletonAlarm.getServiceAlarm();
+
+            AlarmController ac = new AlarmController();
+
+            if (ac.exceedsPrecipThreshold(serviceAlarm))
+            {
+                ac.createAlarm(this, serviceAlarm);
+            }
+        }
 
         super.onCreate(savedInstanceState);
         if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
@@ -41,20 +53,6 @@ public class MainActivity extends AppCompatActivity implements AppInfo
         {
             singletonAlarm.setIsSinglePane(true);
             setContentView(R.layout.activity_main);
-        }
-
-        if (singletonAlarm.getServiceAlarm() != null)
-        {
-            Alarm serviceAlarm;
-            AlarmController ac;
-
-            serviceAlarm = singletonAlarm.getServiceAlarm();
-            ac = new AlarmController();
-
-            if (ac.exceedsPrecipThreshold(serviceAlarm))
-            {
-                ac.createAlarm(this, serviceAlarm);
-            }
         }
 
         if (findViewById(R.id.fragment_container) != null)
@@ -92,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements AppInfo
                 }
                 else
                 {
-                    alarmEditFragment = (AlarmEditFragment) getSupportFragmentManager()
+                    AlarmEditFragment alarmEditFragment = (AlarmEditFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.fragment_alarm_edit);
                     alarmEditFragment.clearInputs();
                 }

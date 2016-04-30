@@ -17,6 +17,8 @@ public class SingletonAlarm
     private ArrayList<Alarm> alarms;
     private Alarm clickedAlarm;
     private Alarm serviceAlarm;
+    private AlarmEditFragment alarmEditFragment;
+    private AlarmListFragment alarmListFragment;
     private Integer clickedAlarmPosition = null;
     private int position;
     private double currPrecip;
@@ -205,5 +207,65 @@ public class SingletonAlarm
     public void setIsSinglePane(boolean isSinglePane)
     {
         this.isSinglePane = isSinglePane;
+    }
+
+    /**
+     * Gets alarm edit fragment.
+     *
+     * @return the alarm edit fragment
+     */
+    public AlarmEditFragment getAlarmEditFragment()
+    {
+        return alarmEditFragment;
+    }
+
+    /**
+     * Sets alarm edit fragment.
+     *
+     * @param alarmEditFragment the alarm edit fragment
+     */
+    public void setAlarmEditFragment(AlarmEditFragment alarmEditFragment)
+    {
+        this.alarmEditFragment = alarmEditFragment;
+    }
+
+    /**
+     * Gets alarm list fragment.
+     *
+     * @return the alarm list fragment
+     */
+    public AlarmListFragment getAlarmListFragment()
+    {
+        return alarmListFragment;
+    }
+
+    /**
+     * Sets alarm list fragment.
+     *
+     * @param alarmListFragment the alarm list fragment
+     */
+    public void setAlarmListFragment(AlarmListFragment alarmListFragment)
+    {
+        this.alarmListFragment = alarmListFragment;
+    }
+
+    /**
+     * Is single pane boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isSinglePane()
+    {
+        return isSinglePane;
+    }
+
+    /**
+     * Sets single pane.
+     *
+     * @param singlePane the single pane
+     */
+    public void setSinglePane(boolean singlePane)
+    {
+        isSinglePane = singlePane;
     }
 }

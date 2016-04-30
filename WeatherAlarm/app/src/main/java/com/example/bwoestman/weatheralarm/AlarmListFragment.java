@@ -1,19 +1,23 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.*;
 import android.widget.Switch;
 import android.widget.TextView;
+import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +58,12 @@ public class AlarmListFragment extends Fragment implements AppInfo
         return view;
     }
 
-    private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnLongClickListener
     {
         private TextView mTimeTv;
-//        private Switch mEnableSw;
+        private TextView mRainTv;
+        private TextView mAdjustment;
         private Alarm mAlarm;
 
         public AlarmHolder(View itemView)
@@ -65,8 +71,12 @@ public class AlarmListFragment extends Fragment implements AppInfo
             super(itemView);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
 
             mTimeTv = (TextView) itemView.findViewById(R.id.tv_time);
+            mRainTv = (TextView) itemView.findViewById(R.id.tv_rain);
+            mAdjustment = (TextView) itemView.findViewById(R.id.tv_adjustment);
+
 //            mEnableSw = (Switch) itemView.findViewById(R.id.sw_enable);
 
 //            mEnableSw.setOnClickListener(new View.OnClickListener()
@@ -110,6 +120,35 @@ public class AlarmListFragment extends Fragment implements AppInfo
                 alarmEditFragment.updateUi();
             }
         }
+
+
+        @Override
+        public boolean onLongClick(final View v)
+        {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext())
+                    .setTitle("Delete Alarm?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            DBHandler dbHandler = new DBHandler(v.getContext(), null, null, 1);
+                            dbHandler.deleteAlarm(mAlarm);
+                            singletonAlarm.setAlarms((ArrayList<Alarm>) dbHandler.getAlarms());
+                            updateUI();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                        }
+                    });
+            alertDialog.show();
+
+            return false;
+        }
     }
 
     private class AlarmAdapter extends RecyclerView.Adapter<AlarmHolder>
@@ -138,6 +177,8 @@ public class AlarmListFragment extends Fragment implements AppInfo
             Alarm alarm;
             String minute;
             String time;
+            String rain;
+            String adjustment;
 
             alarm = mAlarms.get(position);
 
@@ -153,8 +194,15 @@ public class AlarmListFragment extends Fragment implements AppInfo
             }
 
             time = alarm.getHour() + ":" + minute;
+            rain = Integer.toString(alarm.getRain()) + "% ";
+            adjustment = Integer.toString(alarm.getAdjustment()) + "m Offset";
 
+            if (singletonAlarm.getIsSinglePane())
+            {
+                holder.mAdjustment.setText(adjustment);
+            }
             holder.mTimeTv.setText(time);
+            holder.mRainTv.setText(rain);
 
 //            if (alarm.getEnabled() == 1)
 //            {
@@ -241,5 +289,6 @@ public class AlarmListFragment extends Fragment implements AppInfo
                 .beginTransaction();
         transaction.replace(R.id.fragment_container, alarmEditFragment)
                 .addToBackStack(null)
-                .commit();}
+                .commit();
+    }
 }

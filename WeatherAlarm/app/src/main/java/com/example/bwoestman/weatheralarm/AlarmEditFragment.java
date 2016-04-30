@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -266,9 +267,11 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             }
             if (alarmsOk && singletonAlarm.getIsSinglePane())
             {
+                alarms = (ArrayList<Alarm>) dbHandler.getAlarms();
+                singletonAlarm.setAlarms(alarms);
                 goToListView();
             }
-            else
+            else if (!singletonAlarm.getIsSinglePane())
             {
                 alarmListFragment.updateUI();
             }
