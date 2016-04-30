@@ -44,7 +44,6 @@ public class AlarmController implements AppInfo
         int merid;
         Calendar calendar;
         DBHandler dbHandler;
-        AlarmListFragment alarmListFragment;
 
         calendar = alarm.getCalendar();
 
@@ -64,8 +63,6 @@ public class AlarmController implements AppInfo
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, min);
         alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
         activity.startActivity(alarmIntent);
-
-        dbHandler.deleteAlarm(alarm);
     }
 
     /**
