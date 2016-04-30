@@ -62,7 +62,6 @@ public class AlarmService extends Service implements AppInfo
 
         db = new DBHandler(getApplicationContext(), null, null, 1);
         alarm = db.getAlarm(id);
-        db.deleteAlarm(alarm);
 
         alarms = (ArrayList<Alarm>) db.getAlarms();
 

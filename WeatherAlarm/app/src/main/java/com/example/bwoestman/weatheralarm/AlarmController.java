@@ -118,7 +118,6 @@ public class AlarmController implements AppInfo
                 .ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-        Log.d(TAG, "createTimedTask: set");
     }
 
     /**

@@ -76,27 +76,6 @@ public class AlarmListFragment extends Fragment implements AppInfo
             mTimeTv = (TextView) itemView.findViewById(R.id.tv_time);
             mRainTv = (TextView) itemView.findViewById(R.id.tv_rain);
             mAdjustment = (TextView) itemView.findViewById(R.id.tv_adjustment);
-
-//            mEnableSw = (Switch) itemView.findViewById(R.id.sw_enable);
-
-//            mEnableSw.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    boolean enabled = mEnableSw.isChecked();
-//                    if (enabled)
-//                    {
-//                        mAlarm.setEnabled(1);
-//                    }
-//                    else
-//                    {
-//                        mAlarm.setEnabled(0);
-//                    }
-//                    DBHandler db = new DBHandler(getContext(), null, null, 1);
-//                    db.updateAlarm(mAlarm);
-//                }
-//            });
         }
 
         @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -203,23 +182,6 @@ public class AlarmListFragment extends Fragment implements AppInfo
             }
             holder.mTimeTv.setText(time);
             holder.mRainTv.setText(rain);
-
-//            if (alarm.getEnabled() == 1)
-//            {
-//                holder.mEnableSw.setChecked(true);
-//            } else
-//            {
-//                holder.mEnableSw.setChecked(false);
-//            }
-//
-//            if (alarm.getEnabled() == 1)
-//            {
-//                holder.mEnableSw.setChecked(true);
-//            }
-//            else
-//            {
-//                holder.mEnableSw.setChecked(false);
-//            }
         }
 
         @Override
