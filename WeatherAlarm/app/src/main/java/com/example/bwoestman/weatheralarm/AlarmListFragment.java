@@ -104,9 +104,13 @@ public class AlarmListFragment extends Fragment implements AppInfo
         @Override
         public boolean onLongClick(final View v)
         {
+            String deletePrompt = getResources().getString(R.string.delete_prompt);
+            String deleteButton = getResources().getString(R.string.delete_button);
+            String cancelButton = getResources().getString(R.string.cancel_delete_button);
+
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext())
-                    .setTitle("Delete Alarm?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    .setTitle(deletePrompt)
+                    .setPositiveButton(deleteButton, new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
@@ -117,7 +121,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
                             updateUI();
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener()
+                    .setNegativeButton(deleteButton, new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
@@ -174,7 +178,8 @@ public class AlarmListFragment extends Fragment implements AppInfo
 
             time = alarm.getHour() + ":" + minute;
             rain = Integer.toString(alarm.getRain()) + "% ";
-            adjustment = Integer.toString(alarm.getAdjustment()) + "m Offset";
+            adjustment = Integer.toString(alarm.getAdjustment()) + "m " +
+                    getResources().getString(R.string.adjustment);
 
             if (singletonAlarm.getIsSinglePane())
             {
@@ -214,21 +219,6 @@ public class AlarmListFragment extends Fragment implements AppInfo
 
         mAdapter = new AlarmAdapter(mAlarms);
         mAlarmRecyclerView.setAdapter(mAdapter);
-    }
-
-    /**
-     * this method is for testing the db
-     */
-
-    private void echoAlarms()
-    {
-        DBHandler db = new DBHandler(getContext(), null, null, 1);
-        List<Alarm> as = db.getAlarms();
-
-        for (Alarm a : as)
-        {
-            Log.d(TAG, "echoAlarms: " + a.toString());
-        }
     }
 
     @Override

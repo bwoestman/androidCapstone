@@ -10,7 +10,10 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="time">Time</string>
-    <string name="adjustment">Adjustment</string>
+    <string name="adjustment">Offset</string>
     <string name="adjustment_error">Alarm time must exceed the adjustment</string>
     <string name="adjustment_label">Minutes</string>
+    <string name="delete_prompt">Are you sure you really want to delete your alarm?</string>
+    <string name="delete_button">Yes</string>
+    <string name="cancel_delete_button">No</string>
 </resources>
