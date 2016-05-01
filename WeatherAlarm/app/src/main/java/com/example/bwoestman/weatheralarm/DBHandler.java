@@ -35,10 +35,10 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     /**
      * this is the constructor for the database
-     * @param context
-     * @param name
-     * @param factory
-     * @param version
+     * @param context Context
+     * @param name String
+     * @param factory SQLiteDatabase
+     * @param version int
      */
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory,
@@ -51,7 +51,7 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
      * Called when the database is created for the first time. This is where the
      * creation of tables and the initial population of the tables should happen.
      *
-     * @param db The database.
+     * @param db SQLiteDatabase
      */
     @Override
 
@@ -93,8 +93,8 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     /**
      * this method enters an alarm into the database and returns its id
-     * @param alarm
-     * @return
+     * @param alarm Alarm
+     * @return Long
      */
 
     public Long addAlarm(Alarm alarm)
@@ -117,7 +117,7 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     /**
      * this method returns a list of all the alarms in the database
-     * @return
+     * @return List<Alarm>
      */
 
     public List<Alarm> getAlarms()
@@ -152,13 +152,12 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     /**
      * this method returns one alarm from the database for the specified id
-     * @param id
-     * @return
+     * @param id Long
+     * @return Alarm
      */
 
     public Alarm getAlarm(Long id)
     {
-        Alarm alarm;
         Cursor cursor = null;
         SQLiteDatabase db;
         String query;
@@ -188,7 +187,7 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     /**
      * this method updates all the fields for a specified alarm
-     * @param alarm
+     * @param alarm Alarm
      */
 
     public void updateAlarm(Alarm alarm)
@@ -210,7 +209,7 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     /**
      * this method removes a specified alarm from the database
-     * @param alarm
+     * @param alarm Alarm
      */
 
     public void deleteAlarm(Alarm alarm)
@@ -219,18 +218,6 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
         String sql = "DELETE FROM " + TABLE_ALARMS + " WHERE _id = " + alarm.get_id();
 
         db.execSQL(sql);
-
-        db.close();
-    }
-
-    /**
-     * this method removes all the alarms from the database
-     */
-
-    public void deleteAllAlarms()
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_ALARMS, null, null);
 
         db.close();
     }
