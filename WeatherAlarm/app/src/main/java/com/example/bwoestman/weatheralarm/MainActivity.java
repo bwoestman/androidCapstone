@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements AppInfo
 
     /**
      * this method is used to kick off the application and start the AlarmListFragment
+     *
      * @param savedInstanceState
      */
 
@@ -25,17 +26,19 @@ public class MainActivity extends AppCompatActivity implements AppInfo
     {
         ArrayList<Alarm> alarms = singletonAlarm.getAlarms();
 
-        if (singletonAlarm.getServiceAlarm() != null)
+        if (savedInstanceState == null)
         {
-            Alarm serviceAlarm;
 
-            serviceAlarm = singletonAlarm.getServiceAlarm();
-
-            AlarmController ac = new AlarmController();
-
-            if (ac.exceedsPrecipThreshold(serviceAlarm))
+            if (singletonAlarm.getServiceAlarm() != null)
             {
-                ac.createAlarm(this, serviceAlarm);
+                Alarm serviceAlarm;
+                serviceAlarm = singletonAlarm.getServiceAlarm();
+                AlarmController ac = new AlarmController();
+
+                if (ac.exceedsPrecipThreshold(serviceAlarm))
+                {
+                    ac.createAlarm(this, serviceAlarm);
+                }
             }
         }
 
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements AppInfo
 
     /**
      * this method is called when an item is pressed on the menu
+     *
      * @param item
      * @return
      */
