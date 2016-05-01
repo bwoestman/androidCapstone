@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity implements AppInfo
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        //todo remove this
-//        DBHandler db = new DBHandler(this, null, null, 1);
-//        db.deleteAllAlarms();
         alarms = singletonAlarm.getAlarms();
 
         if (singletonAlarm.getServiceAlarm() != null)

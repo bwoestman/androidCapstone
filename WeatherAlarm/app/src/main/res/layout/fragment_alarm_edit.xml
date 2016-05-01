@@ -10,6 +10,12 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_weight="2">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_time_label"
+                android:text="@string/time"
+                android:textSize="24sp"/>
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -17,7 +23,7 @@
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:gravity="center_horizontal" android:layout_weight="1">
                 <TimePicker
                         android:layout_width="wrap_content"
@@ -42,13 +48,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Adjustment"
-                            android:id="@+id/tvAdjustment" android:textSize="24dp"
+                            android:id="@+id/tvAdjustment" android:textSize="24sp"
                     />
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/tvAdjustSbPosition"
-                            android:textSize="24dp"/>
+                            android:textSize="24sp"/>
                 </LinearLayout>
                 <SeekBar
                         android:layout_width="match_parent"

@@ -355,8 +355,8 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             adjPosition = clickedAlarm.getAdjustment();
             rainPosition = clickedAlarm.getRain();
 
-            mTimePicker.setHour(clickedAlarm.getHour());
-            mTimePicker.setMinute(clickedAlarm.getMinute());
+            mTimePicker.setCurrentHour(clickedAlarm.getHour());
+            mTimePicker.setCurrentMinute(clickedAlarm.getMinute());
 
             mSbRain.setProgress(clickedAlarm.getRain());
             mTvRainSbPosition.setText(rainText);
