@@ -1,15 +1,9 @@
 package com.example.bwoestman.weatheralarm;
 
-import android.app.FragmentManager;
-import android.app.PendingIntent;
 import android.content.res.Configuration;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AppInfo
 {
@@ -18,14 +12,12 @@ public class MainActivity extends AppCompatActivity implements AppInfo
     /**
      * this method is used to kick off the application and start the AlarmListFragment
      *
-     * @param savedInstanceState
+     * @param savedInstanceState Bundle
      */
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        ArrayList<Alarm> alarms = singletonAlarm.getAlarms();
-
         if (savedInstanceState == null)
         {
 
@@ -73,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements AppInfo
     /**
      * this method is called when an item is pressed on the menu
      *
-     * @param item
-     * @return
+     * @param item MenuItem
+     * @return boolean
      */
 
     @Override

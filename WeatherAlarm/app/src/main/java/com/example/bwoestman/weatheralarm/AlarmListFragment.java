@@ -2,7 +2,6 @@ package com.example.bwoestman.weatheralarm;
 
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,13 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.*;
-import android.widget.Switch;
 import android.widget.TextView;
-import org.w3c.dom.Text;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,7 +116,7 @@ public class AlarmListFragment extends Fragment implements AppInfo
                             updateUI();
                         }
                     })
-                    .setNegativeButton(deleteButton, new DialogInterface.OnClickListener()
+                    .setNegativeButton(cancelButton, new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)

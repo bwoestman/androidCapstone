@@ -4,9 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
 /**
@@ -23,7 +20,6 @@ import java.util.ArrayList;
 
 public class AlarmService extends Service implements AppInfo
 {
-    private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
 
     @Override
     public void onCreate()
@@ -56,8 +52,8 @@ public class AlarmService extends Service implements AppInfo
     {
         super.onStart(intent, startId);
 
-        long id;
         SingletonAlarm singletonAlarm;
+        long id;
         Alarm alarm;
         ArrayList<Alarm> alarms;
         DBHandler db;

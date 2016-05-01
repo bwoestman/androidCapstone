@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,7 +156,7 @@ public class DBHandler extends SQLiteOpenHelper implements AppInfo
 
     public Alarm getAlarm(Long id)
     {
-        Cursor cursor = null;
+        Cursor cursor;
         SQLiteDatabase db;
         String query;
 

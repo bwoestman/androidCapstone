@@ -1,7 +1,5 @@
 package com.example.bwoestman.weatheralarm;
 
-import android.location.LocationManager;
-import android.util.Log;
 import com.johnhiott.darkskyandroidlib.ForecastApi;
 import com.johnhiott.darkskyandroidlib.RequestBuilder;
 import com.johnhiott.darkskyandroidlib.models.Request;

@@ -1,12 +1,10 @@
 package com.example.bwoestman.weatheralarm;
 
 import android.annotation.TargetApi;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,17 +31,13 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     private TimePicker mTimePicker;
     private SeekBar mSbAdjustment;
     private SeekBar mSbRain;
-    private Button mBtnCancel;
-    private Button mBtnSave;
-    private TextView mTvAdjustSbPostion;
+    private TextView mTvAdjustSbPosition;
     private TextView mTvRainSbPosition;
     private ArrayList<Alarm> alarms;
     private AlarmListFragment alarmListFragment;
 
     private Integer adjPosition = 0;
     private Integer rainPosition = 0;
-
-    private Alarm alarm;
 
     /**
      * Called to have the fragment instantiate its user interface view.
@@ -80,7 +74,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         {
             view = inflater.inflate(R.layout.fragment_alarm_edit, container, false);
 
-            mBtnCancel = (Button) view.findViewById(R.id.btnCancel);
+            Button mBtnCancel = (Button) view.findViewById(R.id.btnCancel);
             mBtnCancel.setOnClickListener(this);
         }
         else
@@ -95,13 +89,14 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         mSbAdjustment = (SeekBar) view.findViewById(R.id.sbAdjustment);
         mSbRain = (SeekBar) view.findViewById(R.id.sbRain);
 
-        mTvAdjustSbPostion = (TextView) view.findViewById(R.id.tvAdjustSbPosition);
+        mTvAdjustSbPosition = (TextView) view.findViewById(R.id.tvAdjustSbPosition);
         mTvRainSbPosition = (TextView) view.findViewById(R.id.tvRainSbPosition);
 
-        mBtnSave = (Button) view.findViewById(R.id.btnSave);
+        Button mBtnSave = (Button) view.findViewById(R.id.btnSave);
         mBtnSave.setOnClickListener(this);
 
         mTimePicker.setIs24HourView(true);
+        mTimePicker.setCurrentHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
 
         updateUi();
 
@@ -117,7 +112,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
                         getResources().getString(R.string.adjustment_label);
 
                 adjPosition = progress;
-                mTvAdjustSbPostion.setText(adjLabel);
+                mTvAdjustSbPosition.setText(adjLabel);
             }
 
             @Override
@@ -186,7 +181,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     /**
      * this method is the on click controller for the save / cancel buttons
      *
-     * @param v
+     * @param v View
      */
 
     @Override
@@ -218,14 +213,14 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
     /**
      * this method saves new alarms to the database after they've been validated
      *
-     * @param ac
+     * @param ac AlarmController
      */
 
     public void saveNewAlarm(AlarmController ac)
     {
         boolean alarmsOk = true;
 
-        alarm = new Alarm();
+        Alarm alarm = new Alarm();
         alarm.setHour(mTimePicker.getCurrentHour());
         alarm.setMinute(mTimePicker.getCurrentMinute());
         alarm.setAdjustment(adjPosition);
@@ -290,7 +285,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
      * this method is used to update existing alarms after being modified in the
      * AlarmEditFragment
      *
-     * @param ac
+     * @param ac AlarmController
      */
 
     public void saveExistingAlarm(AlarmController ac)
@@ -371,7 +366,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             mTvRainSbPosition.setText(rainText);
 
             mSbAdjustment.setProgress(clickedAlarm.getAdjustment());
-            mTvAdjustSbPostion.setText(adjText);
+            mTvAdjustSbPosition.setText(adjText);
         }
     }
 
@@ -389,7 +384,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         mSbAdjustment.setProgress(0);
         mSbRain.setProgress(0);
 
-        mTvAdjustSbPostion.setText("");
+        mTvAdjustSbPosition.setText("");
         mTvRainSbPosition.setText("");
     }
 }

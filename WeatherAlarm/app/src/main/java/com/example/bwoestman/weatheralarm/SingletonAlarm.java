@@ -17,10 +17,7 @@ public class SingletonAlarm
     private ArrayList<Alarm> alarms;
     private Alarm clickedAlarm;
     private Alarm serviceAlarm;
-    private AlarmEditFragment alarmEditFragment;
-    private AlarmListFragment alarmListFragment;
     private Integer clickedAlarmPosition = null;
-    private int position;
     private double currPrecip;
     private boolean isSinglePane;
 
@@ -66,67 +63,6 @@ public class SingletonAlarm
     public Integer getClickedAlarmPosition()
     {
         return clickedAlarmPosition;
-    }
-
-    /**
-     * Sets clicked alarm position.
-     *
-     * @param clickedAlarmPosition the clicked alarm position
-     */
-    public void setClickedAlarmPosition(Integer clickedAlarmPosition)
-    {
-        this.clickedAlarmPosition = clickedAlarmPosition;
-    }
-
-    /**
-     * Add alarm.
-     *
-     * @param alarm the alarm
-     */
-    public void addAlarm(Alarm alarm)
-    {
-        alarms.add(alarm);
-    }
-
-    /**
-     * Update alarms.
-     *
-     * @param position the position
-     * @param alarm    the alarm
-     */
-    public void updateAlarms(Integer position, Alarm alarm)
-    {
-        alarms.set(position, alarm);
-    }
-
-    /**
-     * Delete alarm.
-     *
-     * @param position the position
-     */
-    public void deleteAlarm(Integer position)
-    {
-        alarms.remove(position);
-    }
-
-    /**
-     * Gets position.
-     *
-     * @return the position
-     */
-    public int getPosition()
-    {
-        return position;
-    }
-
-    /**
-     * Sets position.
-     *
-     * @param position the position
-     */
-    public void setPosition(int position)
-    {
-        this.position = position;
     }
 
     /**
@@ -209,63 +145,4 @@ public class SingletonAlarm
         this.isSinglePane = isSinglePane;
     }
 
-    /**
-     * Gets alarm edit fragment.
-     *
-     * @return the alarm edit fragment
-     */
-    public AlarmEditFragment getAlarmEditFragment()
-    {
-        return alarmEditFragment;
-    }
-
-    /**
-     * Sets alarm edit fragment.
-     *
-     * @param alarmEditFragment the alarm edit fragment
-     */
-    public void setAlarmEditFragment(AlarmEditFragment alarmEditFragment)
-    {
-        this.alarmEditFragment = alarmEditFragment;
-    }
-
-    /**
-     * Gets alarm list fragment.
-     *
-     * @return the alarm list fragment
-     */
-    public AlarmListFragment getAlarmListFragment()
-    {
-        return alarmListFragment;
-    }
-
-    /**
-     * Sets alarm list fragment.
-     *
-     * @param alarmListFragment the alarm list fragment
-     */
-    public void setAlarmListFragment(AlarmListFragment alarmListFragment)
-    {
-        this.alarmListFragment = alarmListFragment;
-    }
-
-    /**
-     * Is single pane boolean.
-     *
-     * @return the boolean
-     */
-    public boolean isSinglePane()
-    {
-        return isSinglePane;
-    }
-
-    /**
-     * Sets single pane.
-     *
-     * @param singlePane the single pane
-     */
-    public void setSinglePane(boolean singlePane)
-    {
-        isSinglePane = singlePane;
-    }
 }

@@ -1,11 +1,5 @@
 package com.example.bwoestman.weatheralarm;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Build;
-import android.provider.AlarmClock;
-
 import java.util.Calendar;
 
 /**
@@ -26,7 +20,6 @@ public class Alarm
     private Integer rain;
     private Integer adjustment;
     private Integer enabled = 0;
-    private Intent alarmIntent;
 
     /**
      * Instantiates a new Alarm.
@@ -198,43 +191,8 @@ public class Alarm
     }
 
     /**
-     * Gets alarm intent.
-     *
-     * @return the alarm intent
-     */
-    public Intent getAlarmIntent()
-    {
-        return alarmIntent;
-    }
-
-    /**
-     * Sets alarm intent.
-     *
-     * @param alarmIntent the alarm intent
-     */
-    public void setAlarmIntent(Intent alarmIntent)
-    {
-        this.alarmIntent = alarmIntent;
-    }
-
-    /**
-     * Create alarm.
-     *
-     * @param activity the activity
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void createAlarm(Activity activity)
-    {
-        alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
-        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
-        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minute);
-        alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-        activity.startActivity(alarmIntent);
-    }
-
-    /**
      * this method outputs the alarm properties as a string
-     * @return
+     * @return String
      */
     public String toString()
     {
