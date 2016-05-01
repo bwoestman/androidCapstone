@@ -19,7 +19,7 @@ public class AlarmWeather implements AppInfo
 {
     /**
      * this method sends a request to DarkSky and returns the current weather forecast
-     * and saves chance of precipitation to the AlarmSingleton
+     * for Madison, WI and saves chance of precipitation to the AlarmSingleton
      */
     public void getCurrentWeatherForecast()
     {
@@ -45,7 +45,6 @@ public class AlarmWeather implements AppInfo
             {
                 double currentPrecip = Double.valueOf(weatherResponse.getCurrently()
                         .getPrecipProbability());
-                Log.d(TAG, "success: precip" + currentPrecip);
 
                 SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
                 singletonAlarm.setCurrPrecip(currentPrecip);
@@ -54,7 +53,6 @@ public class AlarmWeather implements AppInfo
             @Override
             public void failure(RetrofitError error)
             {
-                Log.d(TAG, "failure: Oh, no!" + error);
             }
         });
     }

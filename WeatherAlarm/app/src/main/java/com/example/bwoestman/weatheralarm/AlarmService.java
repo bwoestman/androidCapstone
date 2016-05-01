@@ -44,6 +44,13 @@ public class AlarmService extends Service implements AppInfo
         super.onDestroy();
     }
 
+    /**
+     * this method starts the main activity when the timed task fires - it also queries the
+     * database and retrieves all alarms and the alarm that will be set.
+     * @param intent Intent
+     * @param startId int
+     */
+
     @Override
     public void onStart(Intent intent, int startId)
     {
