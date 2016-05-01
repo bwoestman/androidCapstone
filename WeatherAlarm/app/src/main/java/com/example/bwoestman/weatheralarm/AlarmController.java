@@ -40,6 +40,8 @@ public class AlarmController implements AppInfo
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void createAlarm(Activity activity, Alarm alarm)
     {
+        if (alarm == null) return;
+
         int hour;
         int min;
         int merid;

@@ -49,7 +49,6 @@ public class AlarmService extends Service implements AppInfo
     @Override
     public void onStart(Intent intent, int startId)
     {
-        Log.d(TAG, "onStart: taskRunning");
         super.onStart(intent, startId);
 
         long id;
@@ -64,6 +63,8 @@ public class AlarmService extends Service implements AppInfo
 
         db = new DBHandler(getApplicationContext(), null, null, 1);
         alarm = db.getAlarm(id);
+
+        if (alarm == null) return;
 
         alarms = (ArrayList<Alarm>) db.getAlarms();
 
