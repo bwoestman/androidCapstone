@@ -22,7 +22,7 @@
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:gravity="center_horizontal" android:layout_weight="1">
                 <TimePicker
                         android:layout_width="wrap_content"
@@ -46,14 +46,15 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Adjustment"
-                            android:id="@+id/tvAdjustment" android:textSize="24dp"
+                            android:text="@string/adjustment"
+                            android:id="@+id/tvAdjustment"
+                            android:textSize="24sp"
                     />
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/tvAdjustSbPosition"
-                            android:textSize="24dp"/>
+                            android:textSize="24sp"/>
                 </LinearLayout>
                 <SeekBar
                         android:layout_width="match_parent"
@@ -72,8 +73,9 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rain"
-                            android:id="@+id/tvRain" android:textSize="24dp"
+                            android:text="@string/rain"
+                            android:id="@+id/tvRain"
+                            android:textSize="24sp"
                     />
                     <TextView
                             android:layout_width="wrap_content"
@@ -96,9 +98,10 @@
             android:layout_weight="1" android:gravity="bottom">
         <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Save"
-                android:id="@+id/btnSave" android:layout_weight="1"/>
+                android:text="@string/save"
+                android:id="@+id/btnSave"
+                android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>
