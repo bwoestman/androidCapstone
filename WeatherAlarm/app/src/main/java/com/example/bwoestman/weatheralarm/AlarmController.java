@@ -8,12 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.provider.AlarmClock;
-import android.provider.Settings;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
-import java.security.KeyStore;
 import java.util.Calendar;
 
 /**
@@ -34,8 +28,8 @@ public class AlarmController implements AppInfo
     /**
      * this method is used to set an AlarmClock to the time specified by the Alarm
      * parameter
-     * @param activity
-     * @param alarm
+     * @param activity Activity
+     * @param alarm Alarm
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void createAlarm(Activity activity, Alarm alarm)
@@ -72,7 +66,7 @@ public class AlarmController implements AppInfo
 
     /**
      * this method saves a calendar to the Alarm parameter for the specified alarm time
-     * @param alarm
+     * @param alarm Alarm
      */
 
     public void createAlarmCalendar(Alarm alarm)
@@ -103,8 +97,8 @@ public class AlarmController implements AppInfo
     /**
      * this method creates a timed task that will wake the application to set the
      * alarms at a future time
-     * @param context
-     * @param alarm
+     * @param context Context
+     * @param alarm Alarm
      */
 
     public void createTimedTask(Context context, Alarm alarm)
@@ -136,7 +130,7 @@ public class AlarmController implements AppInfo
      * this function checks that the alarm is set for the future and adds 24 hours
      * if the time has already expired
      *
-     * @param alarm
+     * @param alarm Alarm
      */
 
     public void validateAlarmTime(Alarm alarm)
@@ -166,8 +160,8 @@ public class AlarmController implements AppInfo
      * this method is used to check if the alarm adjustment will result in a valid
      * alarm time by checking the difference between the alarm time and the minute
      * value of the adjustment
-     * @param alarm
-     * @return
+     * @param alarm Alarm
+     * @return boolean
      */
 
     public boolean validateAlarmAdj(Alarm alarm)
@@ -194,8 +188,8 @@ public class AlarmController implements AppInfo
     /**
      * this method checks the alarm time and the adjustment to determine if the alarm
      * should be set immediately
-     * @param alarm
-     * @return
+     * @param alarm Alarm
+     * @return boolean
      */
 
     public boolean setAlarm(Alarm alarm)
@@ -220,8 +214,8 @@ public class AlarmController implements AppInfo
     /**
      * this method determines if the current chance of rain exceeds the Alarm property
      * for chance of rain
-     * @param alarm
-     * @return
+     * @param alarm Alarm
+     * @return boolean
      */
 
     public boolean exceedsPrecipThreshold(Alarm alarm)
