@@ -109,8 +109,11 @@ public class AlarmController implements AppInfo
 
     public void createTimedTask(Context context, Alarm alarm)
     {
-        Calendar cal = alarm.getCalendar();
-        int _id = alarm.get_id().intValue();
+        Calendar cal;
+        int _id;
+
+        cal = alarm.getCalendar();
+        _id= alarm.get_id().intValue();
         dbHandler = new DBHandler(context, null, null, 1);
 
         alarm.setEnabled(1);
