@@ -138,8 +138,11 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
+                String rainLabel;
                 rainPosition = progress;
-                mTvRainSbPosition.setText(": " + Integer.toString(progress) + "%");
+
+                rainLabel = ": " + Integer.toString(progress) + "%";
+                mTvRainSbPosition.setText(rainLabel);
             }
 
             @Override
@@ -355,7 +358,8 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             rainText = ": " + clickedAlarm.getRain() + getActivity().getString(R.string
                     .percent_symbol);
 
-            adjText = ": " + clickedAlarm.getAdjustment() + " minutes";
+            adjText = ": " + clickedAlarm.getAdjustment() + " " +
+                    getResources().getString(R.string.adjustment_label);
 
             adjPosition = clickedAlarm.getAdjustment();
             rainPosition = clickedAlarm.getRain();
