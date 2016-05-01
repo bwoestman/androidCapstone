@@ -35,7 +35,6 @@ public class AlarmService extends Service implements AppInfo
     @Override
     public IBinder onBind(Intent intent)
     {
-        Toast.makeText(this, "MyAlarmService.onBind()", Toast.LENGTH_SHORT).show();
         return null;
     }
 
@@ -43,7 +42,6 @@ public class AlarmService extends Service implements AppInfo
     public void onDestroy()
     {
         super.onDestroy();
-        Toast.makeText(this, "MyAlarmService.onDestroy()", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -83,8 +81,6 @@ public class AlarmService extends Service implements AppInfo
     @Override
     public boolean onUnbind(Intent intent)
     {
-        Toast.makeText(this, "MyAlarmService.onUnbind()", Toast.LENGTH_SHORT).show();
-
         return super.onUnbind(intent);
     }
 }
