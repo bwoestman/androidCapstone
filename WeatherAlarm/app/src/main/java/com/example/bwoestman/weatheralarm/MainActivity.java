@@ -3,6 +3,7 @@ package com.example.bwoestman.weatheralarm;
 import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.res.Configuration;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AppInfo
 {
-    private ArrayList<Alarm> alarms;
     private SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
 
     /**
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements AppInfo
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        alarms = singletonAlarm.getAlarms();
+        ArrayList<Alarm> alarms = singletonAlarm.getAlarms();
 
         if (singletonAlarm.getServiceAlarm() != null)
         {

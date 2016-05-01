@@ -374,7 +374,7 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
         Calendar calendar;
         calendar = Calendar.getInstance();
 
-        mTimePicker.setHour(calendar.get(Calendar.HOUR));
+        mTimePicker.setHour(calendar.get(Calendar.HOUR_OF_DAY));
         mTimePicker.setMinute(calendar.get(Calendar.MINUTE));
 
         mSbAdjustment.setProgress(0);

@@ -30,6 +30,7 @@ import java.util.Calendar;
 public class AlarmController implements AppInfo
 {
     SingletonAlarm singletonAlarm = SingletonAlarm.getInstance();
+    DBHandler dbHandler;
     /**
      * this method is used to set an AlarmClock to the time specified by the Alarm
      * parameter
@@ -43,9 +44,9 @@ public class AlarmController implements AppInfo
         int min;
         int merid;
         Calendar calendar;
-        DBHandler dbHandler;
 
         calendar = alarm.getCalendar();
+        dbHandler = new DBHandler(activity.getApplicationContext(), null, null, 1);
 
         hour = calendar.get(Calendar.HOUR);
         min = calendar.get(Calendar.MINUTE);
@@ -57,7 +58,9 @@ public class AlarmController implements AppInfo
         }
 
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
-        dbHandler = new DBHandler(activity.getApplicationContext(), null, null, 1);
+
+        alarm.setEnabled(1);
+        dbHandler.updateAlarm(alarm);
 
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, min);
@@ -106,6 +109,13 @@ public class AlarmController implements AppInfo
     {
         Calendar cal = alarm.getCalendar();
         int _id = alarm.get_id().intValue();
+        dbHandler = new DBHandler(context, null, null, 1);
+
+        alarm.setEnabled(1);
+
+        dbHandler.updateAlarm(alarm);
+
+        cal.add(Calendar.MINUTE, -10);
 
         Intent intent = new Intent(context, AlarmService.class);
 
