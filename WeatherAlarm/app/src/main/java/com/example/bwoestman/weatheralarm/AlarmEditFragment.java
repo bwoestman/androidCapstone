@@ -111,8 +111,13 @@ public class AlarmEditFragment extends Fragment implements AppInfo, View.OnClick
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
+                String adjLabel;
+
+                adjLabel = ": " + Integer.toString(progress) + " " +
+                        getResources().getString(R.string.adjustment_label);
+
                 adjPosition = progress;
-                mTvAdjustSbPostion.setText(": " + Integer.toString(progress) + " minutes");
+                mTvAdjustSbPostion.setText(adjLabel);
             }
 
             @Override
