@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <fragment class="com.example.bwoestman.weatheralarm.AlarmListFragment"
+    <fragment class="com.bwoestman.weatheralarm.AlarmListFragment"
               android:id="@+id/alarm_list_fragment"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -14,7 +14,7 @@
             android:layout_height="match_parent" android:background="@color/dim_foreground_disabled_material_dark"
             android:layout_marginTop="10dp" android:layout_marginBottom="10dp"/>
 
-    <fragment class="com.example.bwoestman.weatheralarm.AlarmEditFragment"
+    <fragment class="com.bwoestman.weatheralarm.AlarmEditFragment"
               android:id="@+id/fragment_alarm_edit"
               android:layout_width="0dp"
               android:layout_height="match_parent"
